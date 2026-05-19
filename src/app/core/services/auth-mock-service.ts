@@ -1,17 +1,17 @@
 import {computed, inject, Injectable, Signal, signal, WritableSignal} from '@angular/core';
 import {Observable, of, throwError} from 'rxjs';
 import {delay} from 'rxjs/operators';
-import {Authentication} from '../src/app/core/models/authentication.interface';
-import {AuthenticatedUser} from '../src/app/core/models/authenticated-user.interface';
-import {AuthenticateResponse} from '../src/app/core/models/authenticate-response.interface';
-import {AuthService} from '../src/app/core/services/auth.service';
-import {ErrorHandlingService} from '../src/app/core/services/error-handling.service';
-import {BusinessErrorCode} from '../src/app/core/models/business-error-code.enum';
+import {Authentication} from '../models/authentication.interface';
+import {AuthenticatedUser} from '../models/authenticated-user.interface';
+import {AuthenticateResponse} from '../models/authenticate-response.interface';
+import {AuthService} from './auth-service';
+import {ErrorHandlingService} from '../errors/error-handling-service';
+import {BusinessErrorCode} from '../models/business-error-code.enum';
 
 
 @Injectable({providedIn: 'root'})
 export class AuthMockService extends AuthService {
-  private errorHandling = inject(ErrorHandlingService);
+  private errorHandling: ErrorHandlingService = inject(ErrorHandlingService);
 
   private mockUser = {
     id: "1",

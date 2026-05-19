@@ -1,10 +1,10 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {ToastComponent} from './core/components/toast/toast.component';
+import {Toast} from './core/components/toast/toast';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ToastComponent],
+  imports: [RouterOutlet, Toast],
   templateUrl: './app.html',
   styleUrl: './app.css',
   standalone: true,

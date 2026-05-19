@@ -5,7 +5,7 @@ import {Authentication} from '../models/authentication.interface';
 import {HttpClient} from '@angular/common/http';
 import {AuthenticatedUser} from '../models/authenticated-user.interface';
 import {skipAuth} from '../helpers/skip-auth';
-import {AuthService} from './auth.service';
+import {AuthService} from './auth-service';
 
 @Injectable({providedIn: "root"})
 export class AuthApiService extends AuthService {

@@ -1,5 +1,5 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { FieldState } from '@angular/forms/signals';
+import {Pipe, PipeTransform} from '@angular/core';
+import {FieldState} from '@angular/forms/signals';
 
 export type ErrorTrigger = 'touched' | 'dirty' | 'always' | 'submitted';
 
@@ -13,7 +13,7 @@ export class HasErrorPipe implements PipeTransform {
   transform(field: FieldState<unknown>, trigger: ErrorTrigger = 'submitted'): boolean {
     if (!field) return false;
 
-    const isInvalid = field.invalid();
+    const isInvalid: boolean = field.invalid();
 
     switch (trigger) {
       case 'submitted':

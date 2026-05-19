@@ -1,7 +1,7 @@
 import {HttpErrorResponse, HttpHandlerFn, HttpRequest} from '@angular/common/http';
 import {inject} from '@angular/core';
 import {catchError, throwError} from 'rxjs';
-import {ErrorHandlingService} from '../services/error-handling.service';
+import {ErrorHandlingService} from '../errors/error-handling-service';
 import {mapHttpStatusToErrorCode} from '../errors/map-http-status-to-error-code';
 import {ErrorCode} from '../models/error-code.type';
 

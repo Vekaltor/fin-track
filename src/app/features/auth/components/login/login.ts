@@ -1,10 +1,10 @@
 import {ChangeDetectionStrategy, Component, inject, model, ModelSignal} from '@angular/core';
 import {Router} from '@angular/router';
 import {email, FieldTree, form, FormField, required, submit} from '@angular/forms/signals';
-import {FieldErrorPipe} from '../../../../core/pipes/field-error.pipe';
-import {HasErrorPipe} from '../../../../core/pipes/has-error.pipe';
+import {FieldErrorPipe} from '../../../../shared/pipes/field-error-pipe';
+import {HasErrorPipe} from '../../../../shared/pipes/has-error-pipe';
 import {firstValueFrom} from 'rxjs';
-import {AuthService} from '../../../../core/services/auth.service';
+import {AuthService} from '../../../../core/services/auth-service';
 
 
 interface LoginData {
@@ -14,13 +14,13 @@ interface LoginData {
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
+  templateUrl: './login.html',
+  styleUrl: './login.css',
   standalone: true,
   imports: [FormField, FieldErrorPipe, HasErrorPipe],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoginComponent {
+export class Login {
   private auth: AuthService = inject(AuthService);
   private router: Router = inject(Router);
 
@@ -29,7 +29,7 @@ export class LoginComponent {
     password: '',
   });
 
-  protected loginForm = form(this.loginModel, (schema) => {
+  protected loginForm = form(this.loginModel, (schema): void => {
     required(schema.email, {message: "Email jest wymagany"});
     email(schema.email, {message: "Email nie jest poprawny"});
     required(schema.password, {message: "Hasło jest wymagane"});

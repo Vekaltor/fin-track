@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {AppError} from '../models/app-error.interface';
-import {ErrorActions} from '../errors/error-actions';
+import {ErrorActions} from './error-actions';
 import {ErrorCode} from '../models/error-code.type';
 import {ErrorAction} from '../models/error-action.interface';
 import {BusinessErrorCode} from '../models/business-error-code.enum';

@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {ToastType} from '../../models/toast-type.enum';
 import {AppError} from '../../models/app-error.interface';
-import {ToastService} from '../../services/toast.service';
+import {ToastService} from '../../services/toast-service';
 import {ErrorAction} from '../../models/error-action.interface';
 
 @Injectable({providedIn: 'root'})

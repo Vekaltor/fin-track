@@ -1,10 +1,10 @@
 import {HttpHandlerFn, HttpRequest} from '@angular/common/http';
 import {inject} from '@angular/core';
-import {AuthApiService} from '../services/auth-api.service';
-import {SKIP_AUTH} from './skip-auth.token';
+import {AuthApiService} from '../services/auth-api-service';
+import {SKIP_AUTH_TOKEN} from './skip-auth-token';
 
 export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
-  if (req.context.get(SKIP_AUTH)) {
+  if (req.context.get(SKIP_AUTH_TOKEN)) {
     return next(req);
   }
   const authToken: string | null = inject(AuthApiService).authToken();

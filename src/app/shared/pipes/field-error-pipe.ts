@@ -1,5 +1,6 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {FieldState} from '@angular/forms/signals';
+import {FieldState, ValidationError} from '@angular/forms/signals';
+import WithFieldTree = ValidationError.WithFieldTree;
 
 @Pipe({
   name: 'fieldError',
@@ -9,7 +10,7 @@ import {FieldState} from '@angular/forms/signals';
 export class FieldErrorPipe implements PipeTransform {
   transform(field: FieldState<unknown>): string {
     if (!field) return "";
-    const errors = field.errors();
+    const errors: WithFieldTree[] = field.errors();
     return errors ? (Object.values(errors)[0].message as string) : "";
   }
 }

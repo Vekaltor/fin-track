@@ -41,4 +41,22 @@ export class ToastService {
       type: ToastType.ERROR
     }]);
   }
+
+  private onInfo(message: string, duration: number = this.DEFAULT_DURATION_TIME): void {
+    this._toasts.update((prev: Toast[]) => [...prev, {
+      id: crypto.randomUUID(),
+      duration,
+      message,
+      type: ToastType.INFO
+    }]);
+  }
+
+  private onWarning(message: string, duration: number = this.DEFAULT_DURATION_TIME): void {
+    this._toasts.update((prev: Toast[]) => [...prev, {
+      id: crypto.randomUUID(),
+      duration,
+      message,
+      type: ToastType.WARNING
+    }]);
+  }
 }
