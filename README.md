@@ -36,3 +36,8 @@ ng serve
 ```
 
 LoginView: `jan@mail.com` / `haslo123`
+
+## Preview
+
+<img width="2556" height="1286" alt="image" src="https://github.com/user-attachments/assets/9ac25079-d7c9-49fe-a376-715b4a637d45" />
+
