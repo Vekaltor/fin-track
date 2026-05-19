@@ -13,14 +13,12 @@ interface LoginData {
 }
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.html',
-  styleUrl: './login.css',
-  standalone: true,
+  templateUrl: './login-view.html',
+  styleUrl: './login-view.css',
   imports: [FormField, FieldErrorPipe, HasErrorPipe],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class Login {
+export class LoginView {
   private auth: AuthService = inject(AuthService);
   private router: Router = inject(Router);
 
@@ -35,7 +33,7 @@ export class Login {
     required(schema.password, {message: "Hasło jest wymagane"});
   }, {
     submission: {
-      action: (instance) => this.login(instance),
+      action: (instance) => this.onLogin(instance),
     }
   });
 
@@ -45,7 +43,7 @@ export class Login {
     void submit(this.loginForm);
   }
 
-  private async login(formInstance: FieldTree<LoginData>): Promise<void> {
+  private async onLogin(formInstance: FieldTree<LoginData>): Promise<void> {
     const email: string = formInstance.email().value();
     const password: string = formInstance.password().value();
 

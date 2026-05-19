@@ -20,9 +20,10 @@ The app itself lets you track bank accounts, browse transaction history, filter 
 
 ## Stack
 
-- Angular 17+
+- Angular 21
 - TypeScript
 - RxJS
+- TailwindCSS v.4.3
 
 ---
 
@@ -34,4 +35,4 @@ npx json-server --watch mock-api/db.json --port 3000
 ng serve
 ```
 
-Login: `jan@mail.com` / `haslo123`
+LoginView: `jan@mail.com` / `haslo123`

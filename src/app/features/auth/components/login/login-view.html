@@ -1,0 +1,50 @@
+<div class="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+  <form class="bg-white border border-gray-200 rounded-2xl p-10 w-96 shadow-sm" (submit)="handleSubmit($event)"
+        novalidate>
+
+    <div class="flex items-center justify-center gap-2 mb-8">
+      <div class="w-9 h-9 bg-blue-600 rounded-lg flex items-center justify-center text-white">
+        <i class="ti ti-chart-bar"></i>
+      </div>
+      <span class="text-lg font-bold text-gray-900">FinTrack</span>
+    </div>
+
+    <div class="text-center mb-7">
+      <h2 class="text-base font-semibold text-gray-900">Zaloguj się do konta</h2>
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-xs font-medium text-gray-500 mb-1">Adres email</label>
+      <input
+        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition"
+        type="email" placeholder="jan@mail.com" [formField]="loginForm.email"/>
+      @if (loginForm.email() | hasError : 'touched') {
+        <p class="text-red-500 text-xs mt-1">{{ loginForm.email() | fieldError }}</p>
+      }
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-xs font-medium text-gray-500 mb-1">Hasło</label>
+      <input
+        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition"
+        type="password" placeholder="••••••••" [formField]="loginForm.password"/>
+      @if (loginForm.password() | hasError : 'touched') {
+        <p class="text-red-500 text-xs mt-1">{{ loginForm.password() | fieldError }}</p>
+      }
+    </div>
+
+    <button
+      class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition disabled:opacity-50"
+      type="submit" [disabled]="loginForm().submitting()">
+      {{ loginForm().submitting() ? 'Logowanie...' : 'Zaloguj się →' }}
+    </button>
+
+    <div class="mt-6 p-3 bg-gray-50 border border-gray-200 rounded-lg">
+      <p class="text-[11px] text-gray-400 mb-1">Dane testowe:</p>
+      <div class="flex justify-between text-xs">
+        <span class="text-gray-600">user&#64;user.pl</span>
+        <span class="font-mono text-blue-600 font-bold">123</span>
+      </div>
+    </div>
+  </form>
+</div>

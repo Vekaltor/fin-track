@@ -5,7 +5,6 @@ import WithFieldTree = ValidationError.WithFieldTree;
 @Pipe({
   name: 'fieldError',
   pure: true,
-  standalone: true,
 })
 export class FieldErrorPipe implements PipeTransform {
   transform(field: FieldState<unknown>): string {

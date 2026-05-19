@@ -5,7 +5,6 @@ export type ErrorTrigger = 'touched' | 'dirty' | 'always' | 'submitted';
 
 @Pipe({
   name: 'hasError',
-  standalone: true,
   pure: false
 })
 export class HasErrorPipe implements PipeTransform {

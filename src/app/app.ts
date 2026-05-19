@@ -7,7 +7,6 @@ import {Toast} from './core/components/toast/toast';
   imports: [RouterOutlet, Toast],
   templateUrl: './app.html',
   styleUrl: './app.css',
-  standalone: true,
   encapsulation: ViewEncapsulation.None
 })
 export class App {

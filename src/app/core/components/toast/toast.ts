@@ -5,7 +5,6 @@ import {Toast as IToast} from "../../models/toast.interface"
 
 @Component({
   selector: 'app-toast',
-  standalone: true,
   imports: [NgClass],
   templateUrl: './toast.html',
   styleUrl: './toast.css',
