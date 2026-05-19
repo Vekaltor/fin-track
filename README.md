@@ -1,59 +1,37 @@
-# Angular21
+# FinTrack
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.11.
+A personal finance tracker built to explore modern Angular, from standalone components and signals to the latest patterns introduced in Angular 17+.
 
-## Development server
+After years of writing NgModule-based Angular, this project was a deliberate attempt to relearn the framework from scratch using only the new APIs. No `NgModule`, no `@Input()/@Output()` decorators, no class-based interceptors. Just the stuff that actually ships today.
 
-To start a local development server, run:
+The app itself lets you track bank accounts, browse transaction history, filter by category and see a spending breakdown by month.
+
+---
+
+## Concepts covered
+
+- Standalone Components with no `NgModule` in sight
+- Signals as the primary reactivity primitive (e.g. `signal`, `computed`, `effect`)
+- New component API (e.g. `input`, `input.required`, `output`) replacing decorators
+- New template syntax (e.g. `@if`, `@for`, `@empty`) replacing structural directives
+- `inject()` function replacing constructor-based DI
+
+---
+
+## Stack
+
+- Angular 17+
+- TypeScript
+- RxJS
+
+---
+
+## Getting started
 
 ```bash
+npm install
+npx json-server --watch mock-api/db.json --port 3000
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Login: `jan@mail.com` / `haslo123`
