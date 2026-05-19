@@ -1,0 +1,62 @@
+import {ChangeDetectionStrategy, Component, inject, model, ModelSignal, signal, WritableSignal} from '@angular/core';
+import {Router} from '@angular/router';
+import {AuthApiService} from '../../../../core/services/auth-api.service';
+import {email, FieldTree, form, FormField, required, submit} from '@angular/forms/signals';
+import {FieldErrorPipe} from '../../../../core/pipes/field-error.pipe';
+import {HasErrorPipe} from '../../../../core/pipes/has-error.pipe';
+import {firstValueFrom} from 'rxjs';
+
+
+interface LoginData {
+  email: string;
+  password: string;
+}
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.css',
+  standalone: true,
+  imports: [FormField, FieldErrorPipe, HasErrorPipe],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class LoginComponent {
+  private auth: AuthApiService = inject(AuthApiService);
+  private router: Router = inject(Router);
+
+  protected loginModel: ModelSignal<LoginData> = model<LoginData>({
+    email: '',
+    password: '',
+  });
+
+  protected loginForm = form(this.loginModel, (schema) => {
+    required(schema.email, {message: "Email jest wymagany"});
+    email(schema.email, {message: "Email nie jest poprawny"});
+    required(schema.password, {message: "Hasło jest wymagane"});
+  }, {
+    submission: {
+      action: (instance) => this.login(instance),
+    }
+  });
+
+  protected handleSubmit(event: SubmitEvent): void {
+    event.preventDefault();
+    this.loginForm().markAsTouched();
+    void submit(this.loginForm);
+  }
+
+  private async login(formInstance: FieldTree<LoginData>): Promise<void> {
+    const email: string = formInstance.email().value();
+    const password: string = formInstance.password().value();
+
+    try {
+      await firstValueFrom(this.auth.login(email, password));
+      void this.router.navigate(['/dashboard']);
+    } catch (err) {
+      console.error('Błąd logowania:', err);
+    }
+
+    return undefined;
+  }
+
+}

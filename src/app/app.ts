@@ -1,12 +1,14 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {Component, ViewEncapsulation} from '@angular/core';
+import {RouterOutlet} from '@angular/router';
+import {ToastComponent} from './core/components/toast/toast.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, ToastComponent],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
+  standalone: true,
+  encapsulation:ViewEncapsulation.None
 })
 export class App {
-  protected readonly title = signal('angular21');
 }

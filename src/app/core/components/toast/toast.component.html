@@ -1,0 +1,8 @@
+<div class="toast-container">
+  @for (item of toasts(); track item.id) {
+    <div class="toast" [ngClass]="'toast--' + item.type.toLowerCase()">
+      <span class="toast__message">{{ item.message }}</span>
+      <button class="toast__close-btn" (click)="remove(item.id)">×</button>
+    </div>
+  }
+</div>

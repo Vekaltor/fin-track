@@ -1,0 +1,452 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "email": "jan@mail.com",
+      "password": "haslo123",
+      "name": "Jan Kowalski",
+      "token": "fake-jwt-token-xyz-123"
+    }
+  ],
+
+  "accounts": [
+    {
+      "id": "1",
+      "userId": "1",
+      "name": "Konto główne",
+      "bank": "PKO Bank Polski",
+      "number": "**** **** **** 4821",
+      "balance": 8420.50,
+      "currency": "PLN",
+      "type": "checking",
+      "color": "indigo"
+    },
+    {
+      "id": "2",
+      "userId": "1",
+      "name": "Oszczędności",
+      "bank": "PKO Bank Polski",
+      "number": "**** **** **** 9032",
+      "balance": 24000.00,
+      "currency": "PLN",
+      "type": "savings",
+      "color": "teal"
+    },
+    {
+      "id": "3",
+      "userId": "1",
+      "name": "Karta kredytowa",
+      "bank": "mBank",
+      "number": "**** **** **** 1147",
+      "balance": -1250.00,
+      "currency": "PLN",
+      "type": "credit",
+      "color": "red"
+    }
+  ],
+
+  "transactions": [
+    {
+      "id": "1",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 3500.00,
+      "type": "income",
+      "category": "salary",
+      "description": "Wynagrodzenie",
+      "date": "2025-05-01"
+    },
+    {
+      "id": "2",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 120.00,
+      "type": "expense",
+      "category": "food",
+      "description": "Biedronka",
+      "date": "2025-05-03"
+    },
+    {
+      "id": "3",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 299.00,
+      "type": "expense",
+      "category": "subscriptions",
+      "description": "Adobe Creative Cloud",
+      "date": "2025-05-05"
+    },
+    {
+      "id": "4",
+      "accountId": "2",
+      "userId": "1",
+      "amount": 500.00,
+      "type": "income",
+      "category": "transfer",
+      "description": "Przelew własny",
+      "date": "2025-05-06"
+    },
+    {
+      "id": "5",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 89.00,
+      "type": "expense",
+      "category": "food",
+      "description": "Żabka",
+      "date": "2025-05-08"
+    },
+    {
+      "id": "6",
+      "accountId": "3",
+      "userId": "1",
+      "amount": 450.00,
+      "type": "expense",
+      "category": "shopping",
+      "description": "Zalando",
+      "date": "2025-05-10"
+    },
+    {
+      "id": "7",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 55.00,
+      "type": "expense",
+      "category": "transport",
+      "description": "Orlen",
+      "date": "2025-05-11"
+    },
+    {
+      "id": "8",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 180.00,
+      "type": "expense",
+      "category": "health",
+      "description": "Apteka Dbam o Zdrowie",
+      "date": "2025-05-12"
+    },
+    {
+      "id": "9",
+      "accountId": "3",
+      "userId": "1",
+      "amount": 320.00,
+      "type": "expense",
+      "category": "restaurants",
+      "description": "Restauracja Sushi Waka",
+      "date": "2025-05-13"
+    },
+    {
+      "id": "10",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 500.00,
+      "type": "income",
+      "category": "transfer",
+      "description": "Zwrot od Piotra",
+      "date": "2025-05-14"
+    },
+    {
+      "id": "11",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 14.99,
+      "type": "expense",
+      "category": "subscriptions",
+      "description": "Spotify",
+      "date": "2025-05-14"
+    },
+    {
+      "id": "12",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 49.99,
+      "type": "expense",
+      "category": "subscriptions",
+      "description": "Netflix",
+      "date": "2025-05-14"
+    },
+    {
+      "id": "13",
+      "accountId": "3",
+      "userId": "1",
+      "amount": 1200.00,
+      "type": "expense",
+      "category": "shopping",
+      "description": "Media Expert — słuchawki",
+      "date": "2025-05-15"
+    },
+    {
+      "id": "14",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 210.00,
+      "type": "expense",
+      "category": "bills",
+      "description": "Czynsz — internet",
+      "date": "2025-05-15"
+    },
+    {
+      "id": "15",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 67.00,
+      "type": "expense",
+      "category": "food",
+      "description": "Lidl",
+      "date": "2025-05-16"
+    },
+    {
+      "id": "16",
+      "accountId": "2",
+      "userId": "1",
+      "amount": 1000.00,
+      "type": "income",
+      "category": "transfer",
+      "description": "Miesięczny przelew na oszczędności",
+      "date": "2025-05-16"
+    },
+    {
+      "id": "17",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 38.00,
+      "type": "expense",
+      "category": "transport",
+      "description": "Bolt — przejazdy",
+      "date": "2025-05-17"
+    },
+    {
+      "id": "18",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 250.00,
+      "type": "expense",
+      "category": "health",
+      "description": "Prywatna wizyta lekarska",
+      "date": "2025-05-17"
+    },
+
+    {
+      "id": "19",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 3500.00,
+      "type": "income",
+      "category": "salary",
+      "description": "Wynagrodzenie",
+      "date": "2025-04-01"
+    },
+    {
+      "id": "20",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 145.00,
+      "type": "expense",
+      "category": "food",
+      "description": "Biedronka",
+      "date": "2025-04-02"
+    },
+    {
+      "id": "21",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 299.00,
+      "type": "expense",
+      "category": "subscriptions",
+      "description": "Adobe Creative Cloud",
+      "date": "2025-04-05"
+    },
+    {
+      "id": "22",
+      "accountId": "3",
+      "userId": "1",
+      "amount": 890.00,
+      "type": "expense",
+      "category": "shopping",
+      "description": "H&M — ubrania",
+      "date": "2025-04-07"
+    },
+    {
+      "id": "23",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 14.99,
+      "type": "expense",
+      "category": "subscriptions",
+      "description": "Spotify",
+      "date": "2025-04-14"
+    },
+    {
+      "id": "24",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 49.99,
+      "type": "expense",
+      "category": "subscriptions",
+      "description": "Netflix",
+      "date": "2025-04-14"
+    },
+    {
+      "id": "25",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 210.00,
+      "type": "expense",
+      "category": "bills",
+      "description": "Czynsz — internet",
+      "date": "2025-04-15"
+    },
+    {
+      "id": "26",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 320.00,
+      "type": "expense",
+      "category": "restaurants",
+      "description": "Pizza Hut — spotkanie ze znajomymi",
+      "date": "2025-04-18"
+    },
+    {
+      "id": "27",
+      "accountId": "2",
+      "userId": "1",
+      "amount": 1000.00,
+      "type": "income",
+      "category": "transfer",
+      "description": "Miesięczny przelew na oszczędności",
+      "date": "2025-04-16"
+    },
+    {
+      "id": "28",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 75.00,
+      "type": "expense",
+      "category": "transport",
+      "description": "Orlen",
+      "date": "2025-04-20"
+    },
+    {
+      "id": "29",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 560.00,
+      "type": "income",
+      "category": "other",
+      "description": "Sprzedaż — OLX",
+      "date": "2025-04-22"
+    },
+    {
+      "id": "30",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 93.00,
+      "type": "expense",
+      "category": "food",
+      "description": "Carrefour",
+      "date": "2025-04-25"
+    },
+
+    {
+      "id": "31",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 3500.00,
+      "type": "income",
+      "category": "salary",
+      "description": "Wynagrodzenie",
+      "date": "2025-03-01"
+    },
+    {
+      "id": "32",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 299.00,
+      "type": "expense",
+      "category": "subscriptions",
+      "description": "Adobe Creative Cloud",
+      "date": "2025-03-05"
+    },
+    {
+      "id": "33",
+      "accountId": "3",
+      "userId": "1",
+      "amount": 2400.00,
+      "type": "expense",
+      "category": "shopping",
+      "description": "RTV Euro AGD — ekspres do kawy",
+      "date": "2025-03-08"
+    },
+    {
+      "id": "34",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 14.99,
+      "type": "expense",
+      "category": "subscriptions",
+      "description": "Spotify",
+      "date": "2025-03-14"
+    },
+    {
+      "id": "35",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 49.99,
+      "type": "expense",
+      "category": "subscriptions",
+      "description": "Netflix",
+      "date": "2025-03-14"
+    },
+    {
+      "id": "36",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 210.00,
+      "type": "expense",
+      "category": "bills",
+      "description": "Czynsz — internet",
+      "date": "2025-03-15"
+    },
+    {
+      "id": "37",
+      "accountId": "2",
+      "userId": "1",
+      "amount": 1000.00,
+      "type": "income",
+      "category": "transfer",
+      "description": "Miesięczny przelew na oszczędności",
+      "date": "2025-03-16"
+    },
+    {
+      "id": "38",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 1200.00,
+      "type": "income",
+      "category": "other",
+      "description": "Premia kwartalna",
+      "date": "2025-03-20"
+    },
+    {
+      "id": "39",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 188.00,
+      "type": "expense",
+      "category": "health",
+      "description": "Okulary korekcyjne",
+      "date": "2025-03-22"
+    },
+    {
+      "id": "40",
+      "accountId": "1",
+      "userId": "1",
+      "amount": 112.00,
+      "type": "expense",
+      "category": "food",
+      "description": "Żabka + Biedronka",
+      "date": "2025-03-28"
+    }
+  ]
+}
