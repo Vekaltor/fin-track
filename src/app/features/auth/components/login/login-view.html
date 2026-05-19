@@ -18,8 +18,8 @@
       <input
         class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition"
         type="email" placeholder="jan@mail.com" [formField]="loginForm.email"/>
-      @if (loginForm.email() | hasError : 'touched') {
-        <p class="text-red-500 text-xs mt-1">{{ loginForm.email() | fieldError }}</p>
+      @if (loginForm.email() | appHasError : 'touched') {
+        <p class="text-red-500 text-xs mt-1">{{ loginForm.email() | appFieldError }}</p>
       }
     </div>
 
@@ -28,15 +28,15 @@
       <input
         class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition"
         type="password" placeholder="••••••••" [formField]="loginForm.password"/>
-      @if (loginForm.password() | hasError : 'touched') {
-        <p class="text-red-500 text-xs mt-1">{{ loginForm.password() | fieldError }}</p>
+      @if (loginForm.password() | appHasError : 'touched') {
+        <p class="text-red-500 text-xs mt-1">{{ loginForm.password() | appFieldError }}</p>
       }
     </div>
 
     <button
       class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition disabled:opacity-50"
       type="submit" [disabled]="loginForm().submitting()">
-      {{ loginForm().submitting() ? 'Logowanie...' : 'Zaloguj się →' }}
+      {{ loginForm().submitting() ? 'Logowanie...' : 'Zaloguj się' }}
     </button>
 
     <div class="mt-6 p-3 bg-gray-50 border border-gray-200 rounded-lg">

@@ -10,6 +10,7 @@ export const guestGuard: CanActivateFn = (): Observable<UrlTree | boolean> => {
 
   return toObservable(authService.isInitializing).pipe(
     filter(isInitializing => !isInitializing),
+    take(1),
     map(() => {
       return authService.isAuthenticated()
         ? router.createUrlTree(['/'])

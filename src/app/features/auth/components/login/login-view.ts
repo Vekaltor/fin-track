@@ -1,8 +1,8 @@
 import {ChangeDetectionStrategy, Component, inject, model, ModelSignal} from '@angular/core';
 import {Router} from '@angular/router';
 import {email, FieldTree, form, FormField, required, submit} from '@angular/forms/signals';
-import {FieldErrorPipe} from '../../../../shared/pipes/field-error-pipe';
-import {HasErrorPipe} from '../../../../shared/pipes/has-error-pipe';
+import {AppFieldErrorPipe} from '../../../../shared/pipes/field-error-pipe';
+import {AppHasErrorPipe} from '../../../../shared/pipes/has-error-pipe';
 import {firstValueFrom} from 'rxjs';
 import {AuthService} from '../../../../core/services/auth-service';
 
@@ -15,7 +15,7 @@ interface LoginData {
 @Component({
   templateUrl: './login-view.html',
   styleUrl: './login-view.css',
-  imports: [FormField, FieldErrorPipe, HasErrorPipe],
+  imports: [FormField, AppFieldErrorPipe, AppHasErrorPipe],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginView {
