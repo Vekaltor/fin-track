@@ -1,10 +1,10 @@
-import {ChangeDetectionStrategy, Component, inject, model, ModelSignal, signal, WritableSignal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, model, ModelSignal} from '@angular/core';
 import {Router} from '@angular/router';
-import {AuthApiService} from '../../../../core/services/auth-api.service';
 import {email, FieldTree, form, FormField, required, submit} from '@angular/forms/signals';
 import {FieldErrorPipe} from '../../../../core/pipes/field-error.pipe';
 import {HasErrorPipe} from '../../../../core/pipes/has-error.pipe';
 import {firstValueFrom} from 'rxjs';
+import {AuthService} from '../../../../core/services/auth.service';
 
 
 interface LoginData {
@@ -21,7 +21,7 @@ interface LoginData {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent {
-  private auth: AuthApiService = inject(AuthApiService);
+  private auth: AuthService = inject(AuthService);
   private router: Router = inject(Router);
 
   protected loginModel: ModelSignal<LoginData> = model<LoginData>({

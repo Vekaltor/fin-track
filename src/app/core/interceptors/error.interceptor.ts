@@ -1,16 +1,33 @@
 import {HttpErrorResponse, HttpHandlerFn, HttpRequest} from '@angular/common/http';
 import {inject} from '@angular/core';
-import {ToastService} from '../services/toast.service';
 import {catchError, throwError} from 'rxjs';
-import {ToastType} from '../models/toast-type.enum';
+import {ErrorHandlingService} from '../services/error-handling.service';
+import {mapHttpStatusToErrorCode} from '../errors/map-http-status-to-error-code';
+import {ErrorCode} from '../models/error-code.type';
 
 export const errorInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
-  const toastService: ToastService = inject(ToastService);
+  const errorHandlingService: ErrorHandlingService = inject(ErrorHandlingService);
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
-      console.error(error);
-      toastService.showMessage(ToastType.ERROR, error.message);
+      let code: ErrorCode;
+      let message: string;
+
+      if (error.error && typeof error.error === 'object' && 'code' in error.error) {
+        code = error.error.code;
+        message = error.error.message || 'An error occurred';
+      } else {
+        const mapped = mapHttpStatusToErrorCode(error.status);
+        code = mapped.code;
+        message = mapped.message;
+      }
+
+      errorHandlingService.handle({
+        code,
+        message,
+        originalError: error
+      });
+
       return throwError(() => error);
     })
   )
