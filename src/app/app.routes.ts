@@ -1,12 +1,17 @@
 import {Routes} from '@angular/router';
-import {authGuard} from './shared/guards/auth-guard';
-import {guestGuard} from './shared/guards/guest-guard';
+import {guestGuard} from './core/guards/guest-guard';
+import {authGuard} from './core/guards/auth-guard';
 
 export const appRoutes: Routes = [
   {
     path: "",
     redirectTo: "/dashboard",
-    pathMatch: "full"
+    pathMatch: "full",
+  },
+  {
+    path: "dashboard",
+    canActivate: [authGuard],
+    loadComponent: () => import("./features/dashboard/components/dashboard-view/dashboard-view").then(c => c.DashboardView),
   },
   // {
   //   path: "accounts",
