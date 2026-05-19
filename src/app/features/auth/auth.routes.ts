@@ -1,5 +1,5 @@
 import {Routes} from '@angular/router';
-import {LoginView} from './components/login/login-view';
+import {LoginView} from './components/login-view/login-view';
 
 export const authRoutes: Routes = [
   {
