@@ -1,12 +1,19 @@
 import {inject} from '@angular/core';
 import {CanActivateFn, Router, UrlTree} from '@angular/router';
 import {AuthService} from '../services/auth-service';
+import {toObservable} from '@angular/core/rxjs-interop';
+import {filter, map, Observable, take} from 'rxjs';
 
-export const guestGuard: CanActivateFn = (): UrlTree | boolean => {
+export const guestGuard: CanActivateFn = (): Observable<UrlTree | boolean> => {
   const authService: AuthService = inject(AuthService);
   const router: Router = inject(Router);
-  const isLogged: boolean = authService.isAuthenticated();
 
-  if (isLogged) return router.createUrlTree(['/']);
-  return true;
+  return toObservable(authService.isInitializing).pipe(
+    filter(isInitializing => !isInitializing),
+    map(() => {
+      return authService.isAuthenticated()
+        ? router.createUrlTree(['/'])
+        : true;
+    })
+  );
 }

@@ -6,8 +6,9 @@ import {Authentication} from '../models/authentication.interface';
 
 @Injectable()
 export abstract class AuthService {
-  authentication: WritableSignal<Authentication | null> = signal<Authentication | null>(null);
-  readonly currentUser: Signal<AuthenticatedUser | null> = computed(() => this.authentication()?.user ?? null)
+  protected authentication: WritableSignal<Authentication | null> = signal<Authentication | null>(null);
+  isInitializing: WritableSignal<boolean> = signal<boolean>(true);
+  readonly currentUser: Signal<AuthenticatedUser | null> = computed(() => this.authentication()?.user ?? null);
   readonly authToken: Signal<string | null> = computed(() => this.authentication()?.token ?? null);
   readonly isAuthenticated: Signal<boolean> = computed((): boolean =>
     !!this.authentication() && this.validateToken(this.authentication()!.token)

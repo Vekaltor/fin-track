@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {catchError, Observable, of, take, tap, throwError} from 'rxjs';
+import {catchError, finalize, Observable, of, take, tap, throwError} from 'rxjs';
 import {AuthenticateResponse} from '../models/authenticate-response.interface';
 import {HttpClient} from '@angular/common/http';
 import {skipAuth} from '../helpers/skip-auth';
@@ -10,8 +10,19 @@ export class AuthApiService extends AuthService {
   private http: HttpClient = inject(HttpClient);
   private readonly API_URL: string = 'http://localhost:3000/auth';
 
+  constructor() {
+    super();
+    this.initAuth();
+  }
+
   public override initAuth(): void {
-    this.refreshToken().pipe(take(1)).subscribe();
+    this.isInitializing.set(true);
+    this.refreshToken()
+      .pipe(
+        take(1),
+        finalize(() => this.isInitializing.set(false))
+      )
+      .subscribe();
   }
 
   public override login(email: string, password: string): Observable<AuthenticateResponse> {

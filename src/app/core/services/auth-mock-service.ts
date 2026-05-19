@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {Observable, of, take, tap, throwError} from 'rxjs';
+import {finalize, Observable, of, take, tap, throwError} from 'rxjs';
 import {delay} from 'rxjs/operators';
 import {AuthenticateResponse} from '../models/authenticate-response.interface';
 import {AuthService} from './auth-service';
@@ -16,12 +16,21 @@ export class AuthMockService extends AuthService {
     email: "user@user.pl",
     password: "123",
     name: "Jan Kowalski",
-    token: "fake-jwt-token-xyz-123"
   };
 
+  constructor() {
+    super();
+    this.initAuth();
+  }
+
   public override initAuth(): void {
-    const hasCookie: string | null = sessionStorage.getItem(this.MOCK_COOKIE_KEY);
-    if (hasCookie) this.refreshToken().pipe(take(1)).subscribe();
+    this.isInitializing.set(true);
+    this.refreshToken()
+      .pipe(
+        take(1),
+        finalize(() => this.isInitializing.set(false))
+      )
+      .subscribe();
   }
 
   public override login(email: string, password: string): Observable<AuthenticateResponse> {
@@ -33,7 +42,7 @@ export class AuthMockService extends AuthService {
           email: this.mockUser.email,
           name: this.mockUser.name,
         },
-        token: this.mockUser.token,
+        token: this.generateValidMockJwt(),
       };
 
       return of(response).pipe(
@@ -60,7 +69,7 @@ export class AuthMockService extends AuthService {
   }
 
   public override refreshToken(): Observable<AuthenticateResponse> {
-    const hasCookie = sessionStorage.getItem(this.MOCK_COOKIE_KEY);
+    const hasCookie: string | null = sessionStorage.getItem(this.MOCK_COOKIE_KEY);
 
     if (!hasCookie) {
       this.logout();
@@ -69,12 +78,27 @@ export class AuthMockService extends AuthService {
 
     const response: AuthenticateResponse = {
       user: {id: this.mockUser.id, email: this.mockUser.email, name: this.mockUser.name},
-      token: "new-refreshed-fake-jwt-token-" + Math.random().toString(36).substr(2, 5),
+      token: this.generateValidMockJwt(),
     };
 
     return of(response).pipe(
       delay(300),
       tap((res: AuthenticateResponse) => this.authentication.set(res))
     );
+  }
+
+  private generateValidMockJwt(): string {
+    const header: string = btoa(JSON.stringify({alg: "HS256", typ: "JWT"}));
+
+    const futureExp: number = Math.floor(Date.now() / 1000) + 3600;
+    const payload: string = btoa(JSON.stringify({
+      sub: this.mockUser.id,
+      email: this.mockUser.email,
+      exp: futureExp
+    }));
+
+    const signature: string = "mock_signature_xyz123";
+
+    return `${header}.${payload}.${signature}`;
   }
 }
