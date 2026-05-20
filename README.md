@@ -39,5 +39,8 @@ LoginView: `jan@mail.com` / `haslo123`
 
 ## Preview
 
-<img width="2556" height="1286" alt="image" src="https://github.com/user-attachments/assets/9ac25079-d7c9-49fe-a376-715b4a637d45" />
+<img width="1265" height="899" alt="image" src="https://github.com/user-attachments/assets/f5427333-21eb-44bc-ab64-0d5e771f941e" />
+
+<img width="1900" height="952" alt="image" src="https://github.com/user-attachments/assets/75dda1f2-053b-45f6-9671-849bb8b61ba1" />
+
 
