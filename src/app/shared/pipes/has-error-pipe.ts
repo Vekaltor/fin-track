@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {FieldState} from '@angular/forms/signals';
+import {Field, FieldState} from '@angular/forms/signals';
 
 export type ErrorTrigger = 'touched' | 'dirty' | 'always' | 'submitted';
 
@@ -7,19 +7,20 @@ export type ErrorTrigger = 'touched' | 'dirty' | 'always' | 'submitted';
   name: 'appHasError',
   pure: false
 })
-export class AppHasErrorPipe implements PipeTransform {
+export class HasErrorPipe implements PipeTransform {
 
-  transform(field: FieldState<unknown>, trigger: ErrorTrigger = 'submitted'): boolean {
+  transform(field: Field<unknown>, trigger: ErrorTrigger = 'submitted'): boolean {
     if (!field) return false;
 
-    const isInvalid: boolean = field.invalid();
+    const fieldInstance: FieldState<unknown> = field();
+    const isInvalid: boolean = fieldInstance.invalid();
 
     switch (trigger) {
       case 'submitted':
       case 'touched':
-        return isInvalid && field.touched();
+        return isInvalid && fieldInstance.touched();
       case 'dirty':
-        return isInvalid && field.dirty();
+        return isInvalid && fieldInstance.dirty();
       case 'always':
       default:
         return isInvalid;

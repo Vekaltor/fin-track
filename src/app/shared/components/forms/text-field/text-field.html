@@ -1,0 +1,7 @@
+<div>
+  <app-input-label [label]="label()"/>
+  <app-input-field [field]="field()" [type]="'text'" [placeholder]="placeholder()"/>
+  @if (showInlineError()) {
+    <app-input-error [field]="field()"/>
+  }
+</div>

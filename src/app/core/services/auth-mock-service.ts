@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {finalize, Observable, of, take, tap, throwError} from 'rxjs';
+import {EMPTY, finalize, Observable, of, take, tap, throwError} from 'rxjs';
 import {delay} from 'rxjs/operators';
 import {AuthenticateResponse} from '../models/authenticate-response.interface';
 import {AuthService} from './auth-service';
@@ -73,7 +73,7 @@ export class AuthMockService extends AuthService {
 
     if (!hasCookie) {
       this.logout();
-      return throwError(() => new Error('No refresh token cookie found'));
+      return EMPTY;
     }
 
     const response: AuthenticateResponse = {

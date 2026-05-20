@@ -1,10 +1,13 @@
 import {ChangeDetectionStrategy, Component, inject, model, ModelSignal} from '@angular/core';
 import {Router} from '@angular/router';
-import {email, FieldTree, form, FormField, required, submit} from '@angular/forms/signals';
-import {AppFieldErrorPipe} from '../../../../shared/pipes/field-error-pipe';
-import {AppHasErrorPipe} from '../../../../shared/pipes/has-error-pipe';
+import {email, FieldTree, form, required, submit} from '@angular/forms/signals';
 import {firstValueFrom} from 'rxjs';
-import {AuthService} from '../../../../core/services/auth-service';
+import {AuthService} from '@core/services/auth-service';
+import {EmailField} from '@shared/components/forms/email-field/email-field';
+import {PasswordField} from '@shared/components/forms/password-field/password-field';
+import {TestDemoCredentials} from '@features/auth/components/test-demo-credentials/test-demo-credentials';
+import {AppButton} from '@shared/components/ui/app-button/app-button';
+import {AppBrand} from '@features/auth/components/auth-brand/auth-brand';
 
 
 interface LoginData {
@@ -15,7 +18,7 @@ interface LoginData {
 @Component({
   templateUrl: './login-view.html',
   styleUrl: './login-view.css',
-  imports: [FormField, AppFieldErrorPipe, AppHasErrorPipe],
+  imports: [EmailField, PasswordField, TestDemoCredentials, AppButton, AppBrand],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginView {
