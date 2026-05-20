@@ -16,19 +16,13 @@ export const appRoutes: Routes = [
       },
       {
         path: "accounts",
-        canActivate: [authGuard],
         loadComponent: () => import("./pages/accounts-view/accounts-view").then(c => c.AccountsView),
       },
       {
         path: "settlements",
-        canActivate: [authGuard],
         providers: [provideSettlementsStore()],
         loadComponent: () => import("./pages/settlements-view/settlements-view").then(c => c.SettlementsView),
       },
-      // {
-      //   path: "analisys",
-      //   canActivate: [authGuard]
-      // },
     ]
   },
   {

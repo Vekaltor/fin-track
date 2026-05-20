@@ -1,33 +1,17 @@
-import {Component, input, InputSignal, output, OutputEmitterRef} from '@angular/core';
-import {AppButton} from '@shared/components/ui/app-button/app-button';
+import {Component, inject, Signal} from '@angular/core';
+import {ModalService} from '@shared/services/modal.service';
 
 @Component({
   selector: 'app-modal',
-  imports: [AppButton],
+  imports: [],
   templateUrl: './app-modal.html',
 })
 export class AppModal {
-  public readonly open: InputSignal<boolean> = input.required<boolean>();
-  public readonly title: InputSignal<string> = input.required<string>();
-  public readonly message: InputSignal<string> = input<string>('');
-  public readonly confirmLabel: InputSignal<string> = input<string>('Potwierdź');
-  public readonly cancelLabel: InputSignal<string> = input<string>('Anuluj');
-  public readonly confirmVariant: InputSignal<'danger' | 'primary'> =
-    input<'danger' | 'primary'>('primary');
-  public readonly loading: InputSignal<boolean> = input<boolean>(false);
+  private readonly modalService: ModalService = inject(ModalService);
 
-  public readonly confirmed: OutputEmitterRef<void> = output<void>();
-  public readonly cancelled: OutputEmitterRef<void> = output<void>();
+  protected readonly isOpen: Signal<boolean> = this.modalService.isOpen;
 
   protected onBackdropClick(): void {
-    this.cancelled.emit();
-  }
-
-  protected onCancel(): void {
-    this.cancelled.emit();
-  }
-
-  protected onConfirm(): void {
-    this.confirmed.emit();
+    this.modalService.canCloseOnBackdrop() && this.modalService.close();
   }
 }

@@ -1,0 +1,30 @@
+<label
+  [class]="
+    cn('inline-flex cursor-pointer select-none items-center gap-3', className())
+  "
+>
+  <input type="checkbox" class="sr-only" [formField]="field()" />
+  <span
+    class="flex h-5 w-5 shrink-0 items-center justify-center rounded-md border-2 transition"
+    [class.border-primary]="field()().value()"
+    [class.bg-primary]="field()().value()"
+    [class.border-gray-300]="!field()().value()"
+    [class.bg-white]="!field()().value()"
+    aria-hidden="true"
+  >
+    @if (field()().value()) {
+      <svg class="h-3 w-3 text-white" viewBox="0 0 12 12" fill="none">
+        <path
+          d="M2 6.5L4.8 9.2L10 3.5"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    }
+  </span>
+  <span class="text-sm font-medium text-dark">
+    <ng-content />
+  </span>
+</label>

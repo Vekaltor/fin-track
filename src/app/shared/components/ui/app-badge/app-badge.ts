@@ -4,13 +4,13 @@ import {cn} from '@utils/cn';
 
 @Component({
   selector: 'app-badge',
-  template: `<span [class]="badgeClass()"><ng-content /></span>`,
+  template: `<span [class]="badgeClass()"><ng-content/></span>`,
 })
 export class AppBadge {
   public readonly variant: InputSignal<BadgeVariant> = input<BadgeVariant>('default');
   public readonly className: InputSignal<string> = input<string>('');
 
-  protected readonly badgeClass: Signal<string> = computed(() =>
+  protected readonly badgeClass: Signal<string> = computed((): string =>
     cn(
       'inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium',
       this.variantClasses[this.variant()],

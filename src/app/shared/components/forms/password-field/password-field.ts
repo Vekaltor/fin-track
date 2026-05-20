@@ -4,6 +4,7 @@ import {InputLabel} from '@shared/components/forms/input-label/input-label';
 import {InputField} from '@shared/components/forms/input-field/input-field';
 import {InputError} from '@shared/components/forms/input-error/input-error';
 import {cn} from '@utils/cn';
+import {GenericFormField} from '@shared/models/interfaces/generic-form-field.interface';
 
 @Component({
   selector: 'app-password-field',
@@ -13,9 +14,8 @@ import {cn} from '@utils/cn';
     InputError
   ],
   templateUrl: './password-field.html',
-  styleUrl: './password-field.css',
 })
-export class PasswordField {
+export class PasswordField implements GenericFormField<string> {
   public field: InputSignal<Field<string>> = input.required<Field<string>>();
   public readonly placeholder: InputSignal<string> = input<string>('');
   public readonly className: InputSignal<string> = input<string>("");

@@ -1,0 +1,10 @@
+<button
+  type="button"
+  [class]="cn(
+        'flex w-full items-center px-3 py-2.5 text-left text-sm text-dark transition hover:bg-primary/5 cursor-pointer',
+        selected() && 'bg-primary/10 font-medium text-primary'
+      )"
+  (click)="clicked.emit()"
+>
+  {{ label() }}
+</button>

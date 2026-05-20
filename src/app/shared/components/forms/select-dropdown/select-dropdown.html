@@ -1,0 +1,51 @@
+<div class="relative min-w-0">
+  <app-select-trigger
+    [isOpen]="isOpen()"
+    [label]="selectedLabel()"
+    [className]="className()"
+    (clicked)="toggle()"
+  />
+
+  @if (isOpen()) {
+    <ul
+      class="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-lg border border-gray-200 bg-white py-1 shadow-lg"
+      role="listbox"
+    >
+      @for (option of options(); track option.value) {
+        <li app-select-option
+            [label]="option.label"
+            [selected]="isSelected(option.value)"
+            (clicked)="select(option.value)">
+        </li>
+      }
+    </ul>
+  }
+
+  @if (isFormMode()) {
+    <select
+      #nativeSelect
+      class="sr-only"
+      tabindex="-1"
+      aria-hidden="true"
+      [formField]="field()!"
+      (change)="onNativeChange()"
+    >
+      @for (option of options(); track option.value) {
+        <option [value]="option.value">{{ option.label }}</option>
+      }
+    </select>
+  } @else {
+    <select
+      #nativeSelect
+      class="sr-only"
+      tabindex="-1"
+      aria-hidden="true"
+      [value]="currentValue()"
+      (change)="onNativeChange()"
+      >
+      @for (option of options(); track option.value) {
+        <option [value]="option.value">{{ option.label }}</option>
+      }
+    </select>
+  }
+</div>

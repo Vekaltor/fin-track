@@ -1,21 +1,22 @@
 import {Component, input, InputSignal} from '@angular/core';
-import {Field} from '@angular/forms/signals';
-import {cn} from '@utils/cn';
-import {InputLabel} from '@shared/components/forms/input-label/input-label';
-import {InputField} from '@shared/components/forms/input-field/input-field';
-import {InputError} from '@shared/components/forms/input-error/input-error';
 import {GenericFormField} from '@shared/models/interfaces/generic-form-field.interface';
+import {Field} from '@angular/forms/signals';
+import {InputError} from '@shared/components/forms/input-error/input-error';
+import {InputField} from '@shared/components/forms/input-field/input-field';
+import {InputLabel} from '@shared/components/forms/input-label/input-label';
+import {cn} from '@utils/cn';
 
 @Component({
-  selector: 'app-text-field',
+  selector: 'app-date-field',
   imports: [
-    InputLabel,
+    InputError,
     InputField,
-    InputError
+    InputLabel
   ],
-  templateUrl: './text-field.html',
+  templateUrl: './date-field.html',
+  styles: ``,
 })
-export class TextField implements GenericFormField<string> {
+export class DateField implements GenericFormField<string> {
   public readonly field: InputSignal<Field<string>> = input.required<Field<string>>();
   public readonly placeholder: InputSignal<string> = input<string>('');
   public readonly className: InputSignal<string> = input<string>("");

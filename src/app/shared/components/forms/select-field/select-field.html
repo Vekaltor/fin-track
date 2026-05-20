@@ -1,0 +1,15 @@
+<div>
+  <app-input-label
+    [label]="label()"
+    className="text-[11px] font-semibold uppercase tracking-[0.08em] text-muted"
+  />
+  <app-select-dropdown
+    [field]="field()"
+    [options]="options()"
+    [className]="className()"
+    [placeholder]="placeholder()"
+  />
+  @if (showInlineError()) {
+    <app-input-error [field]="field()" />
+  }
+</div>

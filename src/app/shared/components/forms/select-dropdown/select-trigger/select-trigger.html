@@ -1,0 +1,18 @@
+<button
+  type="button"
+  [class]="cn(
+        'cursor-pointer flex w-full items-center justify-between gap-2 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-left text-sm text-dark outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/15',
+        className(),
+        isOpen() && 'border-primary ring-2 ring-primary/15'
+      )"
+  [attr.aria-expanded]="isOpen()"
+  aria-haspopup="listbox"
+  (click)="clicked.emit()"
+>
+  <span class="min-w-0 truncate">{{ label() }}</span>
+  <ng-icon
+    name="heroChevronDown"
+    class="size-4 shrink-0 text-muted transition-transform"
+    [class.rotate-180]="isOpen()"
+  />
+</button>
