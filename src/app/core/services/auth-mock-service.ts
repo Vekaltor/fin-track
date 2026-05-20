@@ -5,10 +5,12 @@ import {AuthenticateResponse} from '../models/authenticate-response.interface';
 import {AuthService} from './auth-service';
 import {ErrorHandlingService} from '../errors/error-handling-service';
 import {BusinessErrorCode} from '../models/business-error-code.enum';
+import {Router} from '@angular/router';
 
 @Injectable({providedIn: 'root'})
 export class AuthMockService extends AuthService {
   private errorHandling: ErrorHandlingService = inject(ErrorHandlingService);
+  private router: Router = inject(Router);
 
   private readonly MOCK_COOKIE_KEY: string = 'mock_http_only_refresh_token_exists';
   private mockUser: any = {
@@ -65,6 +67,7 @@ export class AuthMockService extends AuthService {
 
   public override logout(): void {
     this.authentication.set(null);
+    void this.router.navigate(['/auth/login']);
     sessionStorage.removeItem(this.MOCK_COOKIE_KEY);
   }
 

@@ -13,7 +13,7 @@ import { Component } from '@angular/core';
         </div>
         <div class="flex justify-between">
           <span class="text-gray-500">Hasło:</span>
-          <span class="font-mono text-blue-600 font-bold">123</span>
+          <span class="font-mono text-primary font-bold">123</span>
         </div>
       </div>
     </div>

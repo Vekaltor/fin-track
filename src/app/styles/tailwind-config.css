@@ -1,0 +1,13 @@
+@import "./fonts.css";
+@import "./variables.css";
+
+@layer base {
+  body {
+    color: var(--color-dark);
+  }
+
+  * {
+    font-family: var(--font-inter), serif;
+    -webkit-font-smoothing: antialiased;
+  }
+}

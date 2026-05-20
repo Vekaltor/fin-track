@@ -1,6 +1,6 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {Toast} from './core/components/toast/toast';
+import {Toast} from '@core/components/toast/toast';
 
 @Component({
   selector: 'app-root',

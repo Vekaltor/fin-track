@@ -7,20 +7,20 @@ import {Authentication} from '../models/authentication.interface';
 @Injectable()
 export abstract class AuthService {
   protected authentication: WritableSignal<Authentication | null> = signal<Authentication | null>(null);
-  isInitializing: WritableSignal<boolean> = signal<boolean>(true);
-  readonly currentUser: Signal<AuthenticatedUser | null> = computed(() => this.authentication()?.user ?? null);
-  readonly authToken: Signal<string | null> = computed(() => this.authentication()?.token ?? null);
-  readonly isAuthenticated: Signal<boolean> = computed((): boolean =>
+  public isInitializing: WritableSignal<boolean> = signal<boolean>(true);
+  public readonly currentUser: Signal<AuthenticatedUser | null> = computed(() => this.authentication()?.user ?? null);
+  public readonly authToken: Signal<string | null> = computed(() => this.authentication()?.token ?? null);
+  public readonly isAuthenticated: Signal<boolean> = computed((): boolean =>
     !!this.authentication() && this.validateToken(this.authentication()!.token)
   );
 
-  abstract login(email: string, password: string): Observable<AuthenticateResponse>;
+  public abstract login(email: string, password: string): Observable<AuthenticateResponse>;
 
-  abstract logout(): void;
+  public abstract logout(): void;
 
-  abstract initAuth(): void;
+  public abstract initAuth(): void;
 
-  abstract refreshToken(): Observable<AuthenticateResponse>;
+  public abstract refreshToken(): Observable<AuthenticateResponse>;
 
   private validateToken(token?: string): boolean {
     if (!token) return false;

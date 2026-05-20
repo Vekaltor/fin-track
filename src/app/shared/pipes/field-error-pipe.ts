@@ -1,16 +1,23 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {Field, FieldState, ValidationError} from '@angular/forms/signals';
-import WithFieldTree = ValidationError.WithFieldTree;
+import {Field, FieldState} from '@angular/forms/signals';
 
 @Pipe({
   name: 'appFieldError',
   pure: true,
 })
 export class FieldErrorPipe implements PipeTransform {
-  transform(field: Field<unknown>): string {
-    if (!field) return "";
+  public transform(field: Field<unknown>): string {
+    if (!field) {
+      return '';
+    }
     const fieldInstance: FieldState<unknown> = field();
-    const errors: WithFieldTree[] = fieldInstance.errors();
-    return errors ? (Object.values(errors)[0].message as string) : "";
+    const errors: readonly {message?: string}[] = fieldInstance.errors() as readonly {
+      message?: string;
+    }[];
+    if (!errors?.length) {
+      return '';
+    }
+    const first: {message?: string} | undefined = errors[0];
+    return first?.message ?? '';
   }
 }

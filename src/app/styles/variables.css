@@ -1,0 +1,27 @@
+@theme {
+  --color-primary: #f97316;
+  --color-primary-hover: #f0680a;
+
+  --color-background: #f0eeeb;
+
+  --color-muted: #a8a29e;
+  --color-dark: #1c1814;
+
+  --color-nav-item: #6b6560;
+  --color-nav-item-active: #c2550e;
+
+  --color-semantic-error: #b91c1c;
+  --color-semantic-success: #15803d;
+
+  --color-receivable: #15803d;
+  --color-receivable-bg: #ecfdf3;
+  --color-debt: #dc2626;
+  --color-debt-bg: #fef2f2;
+  --color-summary-receive-bg: #f0fdf4;
+  --color-summary-pay-bg: #fff1f2;
+  --color-group-blue: #3b82f6;
+  --color-group-green: #22c55e;
+  --color-group-orange: #f97316;
+
+  --font-inter: 'Inter', sans-serif;
+}

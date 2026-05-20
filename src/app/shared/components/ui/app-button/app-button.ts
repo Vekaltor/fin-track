@@ -27,7 +27,14 @@ export class AppButton {
   });
 
   private readonly variants: Record<ButtonVariant, string> = {
-    primary: 'bg-blue-600 text-white enabled:hover:bg-blue-700',
+    primary: 'bg-primary text-white enabled:hover:bg-primary-hover',
+    primary_outlined:
+      'bg-primary/5 border border-primary text-primary enabled:hover:bg-primary/10',
+    secondary:
+      'bg-white border border-gray-200 text-dark enabled:hover:bg-gray-50',
+    danger: 'bg-debt text-white enabled:hover:bg-debt/90',
+    danger_outlined:
+      'bg-debt/5 border border-debt/30 text-debt enabled:hover:bg-debt/10',
   };
 
   protected handleClick(event: MouseEvent): void {

@@ -4,10 +4,13 @@ import {AuthenticateResponse} from '../models/authenticate-response.interface';
 import {HttpClient} from '@angular/common/http';
 import {skipAuth} from '../helpers/skip-auth';
 import {AuthService} from './auth-service';
+import {Router} from '@angular/router';
 
 @Injectable({providedIn: "root"})
 export class AuthApiService extends AuthService {
   private http: HttpClient = inject(HttpClient);
+  private router: Router = inject(Router);
+
   private readonly API_URL: string = 'http://localhost:3000/auth';
 
   constructor() {
@@ -37,6 +40,7 @@ export class AuthApiService extends AuthService {
 
   public override logout(): void {
     this.authentication.set(null);
+    void this.router.navigate(['/auth/login']);
     this.http.post(`${this.API_URL}/logout`, {}, {withCredentials: true})
       .pipe(
         take(1),
