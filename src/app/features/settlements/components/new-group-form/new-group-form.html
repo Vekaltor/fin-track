@@ -1,0 +1,23 @@
+<div
+  class="rounded-2xl border border-gray-200/90 bg-white p-5 shadow-sm ring-1 ring-black/[0.02]"
+>
+  <app-labeled-field label="Nazwa grupy">
+    <input
+      type="text"
+      class="w-full rounded-lg border border-gray-200 px-3 py-2.5 text-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/15"
+      placeholder="np. Znajomi, Rodzina, Praca"
+      [ngModel]="groupName()"
+      (ngModelChange)="groupName.set($event)"
+      (keydown.enter)="onSubmit()"
+    />
+  </app-labeled-field>
+  <div class="mt-4">
+    <app-form-actions
+      [loading]="(facade.saving$ | async) ?? false"
+      (cancelled)="onCancel()"
+      (submitted)="onSubmit()"
+    >
+      Utwórz
+    </app-form-actions>
+  </div>
+</div>

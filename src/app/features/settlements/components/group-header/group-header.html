@@ -1,0 +1,16 @@
+<div class="flex items-center justify-between gap-4 px-4 py-4">
+  <div class="flex min-w-0 items-center gap-3">
+    <app-group-color-dot [color]="group().color" />
+    <div class="min-w-0">
+      <h3 class="truncate font-semibold text-dark">{{ group().name }}</h3>
+      <p class="text-sm text-muted">{{ visibleCount() | entriesCountLabel }}</p>
+    </div>
+  </div>
+
+  <app-group-header-actions
+    (addEntry)="addEntry.emit()"
+    (deleteGroup)="deleteGroup.emit()"
+  >
+    <app-group-totals-display groupTotals [totals]="totals()" />
+  </app-group-header-actions>
+</div>

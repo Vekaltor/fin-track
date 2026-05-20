@@ -1,0 +1,24 @@
+<div class="border-t border-gray-100">
+  <div
+    class="grid grid-cols-[auto_minmax(0,1fr)_auto_auto] items-center gap-3 px-4 py-4 sm:gap-4"
+  >
+    <app-entry-type-icon [type]="entry().type" />
+    <app-entry-info [entry]="entry()" />
+    <app-entry-amount-block [entry]="entry()" />
+    <app-entry-row-actions
+      [expanded]="expanded()"
+      (archive)="archiveEntry.emit()"
+      (deleteEntry)="deleteEntry.emit()"
+      (toggleExpanded)="toggleExpanded.emit()"
+    />
+  </div>
+
+  @if (expanded()) {
+    <app-installment-panel
+      [entry]="entry()"
+      [groupId]="groupId()"
+      [saving]="saving()"
+      (payInstallment)="payInstallment.emit($event)"
+    />
+  }
+</div>

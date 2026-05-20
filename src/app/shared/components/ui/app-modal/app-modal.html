@@ -1,0 +1,32 @@
+@if (open()) {
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center bg-dark/40 p-4"
+    role="dialog"
+    aria-modal="true"
+    (click)="onBackdropClick()"
+  >
+    <div
+      class="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl"
+      (click)="$event.stopPropagation()"
+    >
+      <ng-content select="[modalIcon]" />
+      <h2 class="text-lg font-semibold text-dark">{{ title() }}</h2>
+      @if (message()) {
+        <p class="mt-2 text-sm text-muted">{{ message() }}</p>
+      }
+      <ng-content />
+      <div class="mt-6 flex justify-end gap-3">
+        <app-button variant="secondary" (clicked)="onCancel()">
+          {{ cancelLabel() }}
+        </app-button>
+        <app-button
+          [variant]="confirmVariant() === 'danger' ? 'danger_outlined' : 'primary'"
+          [loading]="loading()"
+          (clicked)="onConfirm()"
+        >
+          {{ confirmLabel() }}
+        </app-button>
+      </div>
+    </div>
+  </div>
+}

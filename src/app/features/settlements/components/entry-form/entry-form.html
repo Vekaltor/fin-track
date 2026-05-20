@@ -1,0 +1,105 @@
+<div class="border-t border-gray-100 bg-gray-50/50 p-5">
+  <app-section-title [title]="'Nowy wpis - ' + groupName()" />
+
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <app-labeled-field label="Kierunek">
+      <select
+        class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"
+        [ngModel]="direction()"
+        (ngModelChange)="direction.set($event)"
+      >
+        @for (opt of directionOptions; track opt.value) {
+          <option [ngValue]="opt.value">{{ opt.label }}</option>
+        }
+      </select>
+    </app-labeled-field>
+
+    <app-labeled-field label="Osoba">
+      <input
+        class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"
+        placeholder="Imię nazwisko"
+        [ngModel]="personName()"
+        (ngModelChange)="personName.set($event)"
+      />
+    </app-labeled-field>
+
+    <app-labeled-field label="Kwota łączna (zł)">
+      <input
+        type="number"
+        class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"
+        placeholder="0"
+        [ngModel]="totalAmount()"
+        (ngModelChange)="totalAmount.set($event)"
+      />
+    </app-labeled-field>
+
+    <app-labeled-field label="Opis">
+      <input
+        class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"
+        placeholder="Za co?"
+        [ngModel]="description()"
+        (ngModelChange)="description.set($event)"
+      />
+    </app-labeled-field>
+
+    <app-labeled-field label="Termin">
+      <input
+        type="date"
+        class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"
+        [ngModel]="dueDate()"
+        (ngModelChange)="dueDate.set($event)"
+      />
+    </app-labeled-field>
+
+    <div class="flex items-end pb-1">
+      <app-checkbox
+        [checked]="splitIntoInstallments()"
+        (checkedChange)="splitIntoInstallments.set($event)"
+      >
+        Rozbij na raty
+      </app-checkbox>
+    </div>
+  </div>
+
+  @if (splitIntoInstallments()) {
+    <div class="mt-4 grid grid-cols-1 gap-3 md:grid-cols-3">
+      <app-labeled-field label="Kwota">
+        <input
+          type="number"
+          class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"
+          [ngModel]="installmentAmount()"
+          (ngModelChange)="installmentAmount.set($event)"
+        />
+      </app-labeled-field>
+      <app-labeled-field label="Termin">
+        <input
+          type="date"
+          class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"
+          [ngModel]="installmentDueDate()"
+          (ngModelChange)="installmentDueDate.set($event)"
+        />
+      </app-labeled-field>
+      <app-labeled-field label="Notatka">
+        <input
+          class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"
+          placeholder="Opcjonalnie"
+          [ngModel]="installmentNote()"
+          (ngModelChange)="installmentNote.set($event)"
+        />
+      </app-labeled-field>
+    </div>
+    <app-button variant="link" className="mt-2" (clicked)="splitIntoInstallments.set(true)">
+      + Dodaj ratę
+    </app-button>
+  }
+
+  <div class="mt-4">
+    <app-form-actions
+      [loading]="saving()"
+      (cancelled)="onCancel()"
+      (submitted)="onSubmit()"
+    >
+      Zapisz
+    </app-form-actions>
+  </div>
+</div>

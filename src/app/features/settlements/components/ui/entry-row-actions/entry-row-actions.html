@@ -1,0 +1,15 @@
+<div class="flex shrink-0 items-center gap-1">
+  <app-button variant="ghost" ariaLabel="Archiwizuj" (clicked)="archive.emit()">
+    <ng-icon name="heroArchiveBox" class="text-lg" />
+  </app-button>
+  <app-button variant="ghost" ariaLabel="Usuń" (clicked)="deleteEntry.emit()">
+    <ng-icon name="heroTrash" class="text-lg" />
+  </app-button>
+  <app-button variant="ghost" ariaLabel="Rozwiń" (clicked)="toggleExpanded.emit()">
+    @if (expanded()) {
+      <ng-icon name="heroChevronUp" class="text-lg" />
+    } @else {
+      <ng-icon name="heroChevronDown" class="text-lg" />
+    }
+  </app-button>
+</div>

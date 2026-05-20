@@ -1,0 +1,44 @@
+@let addingId = facade.addingEntryGroupId$ | async;
+@let expandedIds = facade.expandedEntryIds$ | async;
+@let saving = facade.saving$ | async;
+
+<div
+  class="overflow-hidden rounded-2xl border border-gray-200/90 bg-white shadow-sm ring-1 ring-black/[0.02]"
+>
+  <app-group-header
+    [group]="group()"
+    [totals]="group().totals"
+    [visibleCount]="group().entries.length"
+    (addEntry)="onAddEntry()"
+    (deleteGroup)="onDeleteGroup()"
+  />
+
+  @if (isAddingEntry(group().id, addingId ?? null)) {
+    <app-entry-form
+      [groupId]="group().id"
+      [groupName]="group().name"
+      [saving]="saving ?? false"
+      (saved)="onEntrySaved($event)"
+      (cancelled)="onEntryFormCancel()"
+    />
+  }
+
+  @if (group().entries.length > 0 && group().filteredEntries.length === 0) {
+    <p class="border-t border-gray-100 px-4 py-6 text-center text-sm text-muted">
+      Brak wpisów pasujących do wybranych filtrów.
+    </p>
+  }
+
+  @for (entry of group().filteredEntries; track entry.id) {
+    <app-entry-row
+      [entry]="entry"
+      [groupId]="group().id"
+      [expanded]="isExpanded(entry.id, expandedIds ?? [])"
+      [saving]="saving ?? false"
+      (toggleExpanded)="onToggleExpanded(entry.id)"
+      (deleteEntry)="onDeleteEntry(entry.id)"
+      (archiveEntry)="onArchiveEntry(entry.id)"
+      (payInstallment)="onPayInstallment($event)"
+    />
+  }
+</div>

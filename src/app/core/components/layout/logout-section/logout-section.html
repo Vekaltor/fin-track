@@ -1,0 +1,12 @@
+<div class="flex items-center gap-3 border-t border-t-muted/40 p-3 pt-6">
+  <div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center font-bold text-xs text-primary">
+    {{initials()}}
+  </div>
+  <div class="text-xs flex-1">
+    <p class="font-semibold">{{fullName}}</p>
+    <p class="text-muted/90">{{email}}</p>
+  </div>
+  <app-button (clicked)="handleLogout()" className="bg-transparent py-2 px-3 text-muted/80 hover:text-white text-xl">
+    <ng-icon name="heroArrowRightEndOnRectangle"/>
+  </app-button>
+</div>

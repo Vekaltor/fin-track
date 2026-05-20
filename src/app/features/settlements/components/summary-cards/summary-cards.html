@@ -1,0 +1,35 @@
+@if (facade.summary$ | async; as summary) {
+  <div class="space-y-4">
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <app-summary-card
+        label="Do otrzymania"
+        [amount]="summary.totalToReceive"
+        tone="positive"
+        backgroundClass="bg-summary-receive-bg"
+      />
+      <app-summary-card
+        label="Do zapłacenia"
+        [amount]="summary.totalToPay"
+        tone="negative"
+        backgroundClass="bg-summary-pay-bg"
+      />
+    </div>
+
+    <div
+      class="flex flex-col justify-between gap-2 rounded-2xl border border-gray-200/80 bg-white px-6 py-5 shadow-sm sm:flex-row sm:items-center"
+    >
+      <div>
+        <p class="text-[11px] font-semibold tracking-[0.12em] text-muted uppercase">
+          Saldo długów i należności
+        </p>
+        <p class="mt-1 text-xs text-muted">Należności minus zobowiązania</p>
+      </div>
+      <p
+        class="font-amount text-3xl font-bold tracking-tight sm:text-4xl"
+        [appAmountColor]="balanceTone(summary)"
+      >
+        {{ summary.balance | currencyPln: true }}
+      </p>
+    </div>
+  </div>
+}

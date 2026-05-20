@@ -1,0 +1,13 @@
+@if (facade.confirmationDialog$ | async; as dialog) {
+  <app-confirm-dialog
+    [open]="dialog.open"
+    [title]="dialog.title"
+    [message]="dialog.message"
+    [confirmLabel]="dialog.confirmLabel"
+    [tone]="dialog.tone"
+    [iconName]="dialog.iconName"
+    [loading]="(facade.saving$ | async) ?? false"
+    (cancelled)="onCancel()"
+    (confirmed)="onConfirm(dialog)"
+  />
+}

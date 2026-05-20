@@ -1,0 +1,11 @@
+<a [routerLink]="link()"
+   routerLinkActive="bg-primary/5 text-nav-item-active font-medium"
+   [routerLinkActiveOptions]="{exact: true}"
+   class="flex items-center gap-3 px-3 py-2 text-[12px] text-nav-item rounded-lg hover:bg-gray-100 transition-colors duration-200">
+  <span class="w-5 h-5 [&>svg]:w-full [&>svg]:h-full opacity-70">
+    <ng-content select="[icon]"></ng-content>
+  </span>
+  <span>
+    {{ label() }}
+  </span>
+</a>

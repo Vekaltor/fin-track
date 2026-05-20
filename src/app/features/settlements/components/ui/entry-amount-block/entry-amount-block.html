@@ -1,0 +1,9 @@
+<div class="shrink-0 text-right">
+  <p class="font-amount text-2xl font-bold tracking-tight" [appAmountColor]="amountTone()">
+    {{ entry().totalAmount | currencyPln }}
+  </p>
+  <p class="mt-0.5 text-xs text-muted">
+    {{ progressPercent() }}% · {{ installmentCount() }}
+    {{ installmentCount() === 1 ? 'rata' : 'rat' }}
+  </p>
+</div>

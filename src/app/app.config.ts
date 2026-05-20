@@ -11,6 +11,9 @@ import {ToastService} from '@core/services/toast-service';
 import {AuthApiService} from '@core/services/auth-api-service';
 import {AuthMockService} from '@core/services/auth-mock-service';
 import {AuthService} from '@core/services/auth-service';
+import {SettlementsApiService} from '@core/services/settlements-api-service';
+import {SettlementsMockService} from '@core/services/settlements-mock-service';
+import {SettlementsService} from '@core/services/settlements-service';
 import {ErrorHandlingService} from '@core/errors/error-handling-service';
 import {provideIcons} from '@ng-icons/core';
 import * as heroOutline from '@ng-icons/heroicons/outline';
@@ -35,6 +38,7 @@ export const appConfig: ApplicationConfig = {
     ErrorHandlingService,
 
     // API MOCK SERVICES
-    {provide: AuthService, useClass: isMock ? AuthMockService : AuthApiService}
+    {provide: AuthService, useClass: isMock ? AuthMockService : AuthApiService},
+    {provide: SettlementsService, useClass: isMock ? SettlementsMockService : SettlementsApiService},
   ]
 };

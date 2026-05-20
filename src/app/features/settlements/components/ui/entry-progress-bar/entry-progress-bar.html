@@ -1,0 +1,8 @@
+<div class="mt-2 h-1.5 w-full max-w-xs overflow-hidden rounded-full bg-gray-100">
+  <div
+    class="h-full rounded-full transition-all duration-300"
+    [class.bg-receivable]="type() === EntryType.Receivable"
+    [class.bg-primary]="type() === EntryType.Debt"
+    [style.width.%]="percent()"
+  ></div>
+</div>

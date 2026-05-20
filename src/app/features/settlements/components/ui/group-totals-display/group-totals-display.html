@@ -1,0 +1,10 @@
+@if (totals().receivable > 0) {
+  <span class="text-sm font-semibold text-receivable">
+    +{{ totals().receivable | currencyPln }}
+  </span>
+}
+@if (totals().debt > 0) {
+  <span class="text-sm font-semibold text-debt">
+    -{{ totals().debt | currencyPln }}
+  </span>
+}

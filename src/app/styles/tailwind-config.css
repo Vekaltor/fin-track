@@ -11,3 +11,8 @@
     -webkit-font-smoothing: antialiased;
   }
 }
+
+@utility font-amount {
+  font-family: var(--font-amount);
+  font-variant-numeric: tabular-nums;
+}

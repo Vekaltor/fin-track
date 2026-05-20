@@ -1,0 +1,8 @@
+<div class="flex justify-end gap-3">
+  <app-button variant="secondary" [disabled]="loading()" (clicked)="cancelled.emit()">
+    Anuluj
+  </app-button>
+  <app-button [loading]="loading()" (clicked)="submitted.emit()">
+    <ng-content />
+  </app-button>
+</div>

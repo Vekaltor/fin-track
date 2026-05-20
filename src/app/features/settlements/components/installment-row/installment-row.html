@@ -1,0 +1,40 @@
+<div
+  class="grid grid-cols-[28px_minmax(0,1fr)_minmax(0,1fr)_80px_120px] items-center gap-2 border-t border-gray-100 px-4 py-3 text-sm sm:gap-3"
+>
+  <span class="text-muted">{{ installment().index }}</span>
+  <span
+    class="min-w-0 truncate"
+    [class.line-through]="installment().status === InstallmentStatus.Paid"
+  >
+    {{ installment().dueDate | shortDatePl }}
+    @if (installment().paymentMethod) {
+      <span class="text-muted"> · {{ installment().paymentMethod }}</span>
+    }
+  </span>
+  <span class="min-w-0 truncate text-muted">{{ installment().note ?? '-' }}</span>
+  <span
+    class="font-semibold"
+    [class.text-muted]="installment().status === InstallmentStatus.Paid"
+    [class.line-through]="installment().status === InstallmentStatus.Paid"
+  >
+    {{ installment().amount | currencyPln }}
+  </span>
+  <div class="flex justify-end">
+    @if (installment().status === InstallmentStatus.Paid) {
+      <span class="inline-flex items-center gap-1 text-receivable">
+        <ng-icon name="heroCheck" />
+        {{ installment().paidAt | shortDatePl }}
+      </span>
+    } @else {
+      <app-button
+        variant="primary_outlined"
+        className="!px-2 !py-1 text-xs"
+        [loading]="saving()"
+        (clicked)="onPay()"
+      >
+        <ng-icon name="heroCheck" />
+        Zapłać
+      </app-button>
+    }
+  </div>
+</div>

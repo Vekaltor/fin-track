@@ -3,4 +3,7 @@ export type ButtonVariant =
   | 'primary_outlined'
   | 'secondary'
   | 'danger'
-  | 'danger_outlined';
+  | 'danger_outlined'
+  | 'ghost'
+  | 'filter'
+  | 'link';
