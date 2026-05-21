@@ -1,7 +1,7 @@
 import {AsyncPipe} from '@angular/common';
 import {Component, inject} from '@angular/core';
-import {AmountColorDirective} from '@shared/directives/amount-color.directive';
-import {CurrencyPlnPipe} from '@shared/pipes/currency-pln.pipe';
+import {AmountColorDirective} from '@shared/directives/amount-color-directive';
+import {CurrencyPlnPipe} from '@shared/pipes/currency-pln-pipe';
 import {AmountTone} from '@shared/models/types/amount-tone.type';
 import {SettlementsSummary} from '@core/models/settlements-summary.interface';
 import {SummaryCard} from '../summary-card/summary-card';

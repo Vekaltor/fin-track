@@ -79,14 +79,14 @@ export class SettlementsEffects {
     )
   );
 
-  public readonly payInstallment$ = createEffect(() =>
+  public readonly payInstallments$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SettlementsActions.payInstallment),
-      mergeMap(({groupId, entryId, installmentId}) =>
-        this.settlementsService.payInstallment(groupId, entryId, installmentId).pipe(
-          map((group) => SettlementsActions.payInstallmentSuccess({group})),
+      ofType(SettlementsActions.payInstallments),
+      mergeMap(({groupId, entryId, installmentIds}) =>
+        this.settlementsService.payInstallments(groupId, entryId, installmentIds).pipe(
+          map((group) => SettlementsActions.payInstallmentsSuccess({group})),
           catchError((err: Error) =>
-            of(SettlementsActions.payInstallmentFailure({error: err.message}))
+            of(SettlementsActions.payInstallmentsFailure({error: err.message}))
           )
         )
       )

@@ -1,6 +1,6 @@
 import {Component, input, InputSignal} from '@angular/core';
-import {CurrencyPlnPipe} from '@shared/pipes/currency-pln.pipe';
-import {AmountColorDirective} from '@shared/directives/amount-color.directive';
+import {CurrencyPlnPipe} from '@shared/pipes/currency-pln-pipe';
+import {AmountColorDirective} from '@shared/directives/amount-color-directive';
 import {AmountTone} from '@shared/models/types/amount-tone.type';
 
 @Component({

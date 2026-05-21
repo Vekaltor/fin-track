@@ -1,5 +1,5 @@
 import {Component, input, InputSignal} from '@angular/core';
-import {CurrencyPlnPipe} from '@shared/pipes/currency-pln.pipe';
+import {CurrencyPlnPipe} from '@shared/pipes/currency-pln-pipe';
 import {GroupTotals} from '@core/models/group-totals.interface';
 
 @Component({

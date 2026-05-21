@@ -1,11 +1,11 @@
 import {Component, computed, input, InputSignal, Signal} from '@angular/core';
 import {AppBadge} from '@shared/components/ui/app-badge/app-badge';
-import {ShortDatePlPipe} from '@shared/pipes/short-date.pipe';
+import {ShortDatePlPipe} from '@shared/pipes/short-date-pipe';
 import {
   ENTRY_STATUS_BADGE_VARIANT,
   ENTRY_STATUS_LABELS,
   ENTRY_TYPE_LABELS,
-} from '../../../constants/entry-labels.constant';
+} from '../../../constants/entry-labels';
 import {EntryType} from '@core/models/entry-type.enum';
 import {SettlementEntry} from '@core/models/settlement-entry.interface';
 import {getEntryProgressPercent} from '../../../utils/settlement-calculations.util';

@@ -16,10 +16,10 @@ export abstract class SettlementsService {
 
   public abstract deleteEntry(groupId: string, entryId: string): Observable<SettlementGroup>;
 
-  public abstract payInstallment(
+  public abstract payInstallments(
     groupId: string,
     entryId: string,
-    installmentId: string
+    installmentIds: readonly string[]
   ): Observable<SettlementGroup>;
 
   public abstract archiveEntry(groupId: string, entryId: string): Observable<SettlementGroup>;

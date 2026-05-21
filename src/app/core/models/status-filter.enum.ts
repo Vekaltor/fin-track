@@ -1,7 +1,7 @@
 export enum StatusFilter {
-  All = 'all',
-  Open = 'open',
-  Overdue = 'overdue',
-  Settled = 'settled',
-  Archived = 'archived',
+  ALL = 'all',
+  OPEN = 'open',
+  OVERDUE = 'overdue',
+  SETTLED = 'settled',
+  ARCHIVED = 'archived',
 }

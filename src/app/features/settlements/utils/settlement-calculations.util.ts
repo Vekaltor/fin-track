@@ -13,38 +13,38 @@ export function getEntryProgressPercent(entry: SettlementEntry): number {
     return 0;
   }
   const paidCount: number = entry.installments.filter(
-    (i) => i.status === InstallmentStatus.Paid
+    (i) => i.status === InstallmentStatus.PAID
   ).length;
   return Math.round((paidCount / entry.installments.length) * 100);
 }
 
 export function getEntryRemainingAmount(entry: SettlementEntry): number {
   const paid: number = entry.installments
-    .filter((i) => i.status === InstallmentStatus.Paid)
+    .filter((i) => i.status === InstallmentStatus.PAID)
     .reduce((sum, i) => sum + i.amount, 0);
   return entry.totalAmount - paid;
 }
 
 export function matchesTypeFilter(entry: SettlementEntry, filter: TypeFilter): boolean {
-  if (filter === TypeFilter.All) {
+  if (filter === TypeFilter.ALL) {
     return true;
   }
-  if (filter === TypeFilter.Debt) {
-    return entry.type === EntryType.Debt;
+  if (filter === TypeFilter.DEBT) {
+    return entry.type === EntryType.DEBT;
   }
-  return entry.type === EntryType.Receivable;
+  return entry.type === EntryType.RECEIVABLE;
 }
 
 export function matchesStatusFilter(entry: SettlementEntry, filter: StatusFilter): boolean {
-  if (filter === StatusFilter.All) {
+  if (filter === StatusFilter.ALL) {
     return true;
   }
   const map: Record<StatusFilter, EntryStatus | null> = {
-    [StatusFilter.All]: null,
-    [StatusFilter.Open]: EntryStatus.Open,
-    [StatusFilter.Overdue]: EntryStatus.Overdue,
-    [StatusFilter.Settled]: EntryStatus.Settled,
-    [StatusFilter.Archived]: EntryStatus.Archived,
+    [StatusFilter.ALL]: null,
+    [StatusFilter.OPEN]: EntryStatus.OPEN,
+    [StatusFilter.OVERDUE]: EntryStatus.OVERDUE,
+    [StatusFilter.SETTLED]: EntryStatus.SETTLED,
+    [StatusFilter.ARCHIVED]: EntryStatus.ARCHIVED,
   };
   const target: EntryStatus | null = map[filter];
   return target === null || entry.status === target;
@@ -55,7 +55,7 @@ export function calculateGroupTotals(entries: readonly SettlementEntry[]): Group
   let debt = 0;
   for (const entry of entries) {
     const remaining: number = getEntryRemainingAmount(entry);
-    if (entry.type === EntryType.Receivable) {
+    if (entry.type === EntryType.RECEIVABLE) {
       receivable += remaining;
     } else {
       debt += remaining;
@@ -69,11 +69,11 @@ export function calculateSummary(groups: readonly SettlementGroup[]): Settlement
   let totalToPay = 0;
   for (const group of groups) {
     for (const entry of group.entries) {
-      if (entry.status === EntryStatus.Settled || entry.status === EntryStatus.Archived) {
+      if (entry.status === EntryStatus.SETTLED || entry.status === EntryStatus.ARCHIVED) {
         continue;
       }
       const remaining: number = getEntryRemainingAmount(entry);
-      if (entry.type === EntryType.Receivable) {
+      if (entry.type === EntryType.RECEIVABLE) {
         totalToReceive += remaining;
       } else {
         totalToPay += remaining;

@@ -66,7 +66,7 @@ export class SettlementsFacade {
   public openDeleteGroupConfirmation(groupId: string, groupName: string): void {
     this.store.dispatch(
       SettlementsActions.openConfirmation({
-        action: SettlementConfirmationAction.DeleteGroup,
+        action: SettlementConfirmationAction.DELETE_GROUP,
         groupId,
         groupName,
       })
@@ -80,7 +80,7 @@ export class SettlementsFacade {
   ): void {
     this.store.dispatch(
       SettlementsActions.openConfirmation({
-        action: SettlementConfirmationAction.DeleteEntry,
+        action: SettlementConfirmationAction.DELETE_ENTRY,
         groupId,
         entryId,
         personName,
@@ -95,7 +95,7 @@ export class SettlementsFacade {
   ): void {
     this.store.dispatch(
       SettlementsActions.openConfirmation({
-        action: SettlementConfirmationAction.ArchiveEntry,
+        action: SettlementConfirmationAction.ARCHIVE_ENTRY,
         groupId,
         entryId,
         personName,
@@ -113,15 +113,15 @@ export class SettlementsFacade {
       return;
     }
     switch (resolvedAction) {
-      case SettlementConfirmationAction.DeleteGroup:
+      case SettlementConfirmationAction.DELETE_GROUP:
         this.store.dispatch(SettlementsActions.deleteGroup({groupId}));
         break;
-      case SettlementConfirmationAction.DeleteEntry:
+      case SettlementConfirmationAction.DELETE_ENTRY:
         if (entryId) {
           this.store.dispatch(SettlementsActions.deleteEntry({groupId, entryId}));
         }
         break;
-      case SettlementConfirmationAction.ArchiveEntry:
+      case SettlementConfirmationAction.ARCHIVE_ENTRY:
         if (entryId) {
           this.store.dispatch(SettlementsActions.archiveEntry({groupId, entryId}));
         }
@@ -145,13 +145,16 @@ export class SettlementsFacade {
     this.store.dispatch(SettlementsActions.toggleEntryExpanded({entryId}));
   }
 
-  public payInstallment(
+  public payInstallments(
     groupId: string,
     entryId: string,
-    installmentId: string
+    installmentIds: readonly string[]
   ): void {
+    if (installmentIds.length === 0) {
+      return;
+    }
     this.store.dispatch(
-      SettlementsActions.payInstallment({groupId, entryId, installmentId})
+      SettlementsActions.payInstallments({groupId, entryId, installmentIds})
     );
   }
 }

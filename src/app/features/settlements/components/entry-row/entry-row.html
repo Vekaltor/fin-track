@@ -16,9 +16,8 @@
   @if (expanded()) {
     <app-installment-panel
       [entry]="entry()"
-      [groupId]="groupId()"
       [saving]="saving()"
-      (payInstallment)="payInstallment.emit($event)"
+      (payInstallments)="payInstallments.emit($event)"
     />
   }
 </div>

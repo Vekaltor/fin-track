@@ -26,9 +26,9 @@ export interface SettlementsState {
 export const initialSettlementsState: SettlementsState = {
   groups: [],
   filters: {
-    type: TypeFilter.All,
-    status: StatusFilter.All,
-    sort: SortField.Date,
+    type: TypeFilter.ALL,
+    status: StatusFilter.ALL,
+    sort: SortField.DATE,
   },
   ui: {
     showNewGroupForm: false,

@@ -1,12 +1,9 @@
-<label class="flex items-center gap-2 text-sm text-muted">
-  Sortuj:
-  <select
-    class="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm text-dark"
+<label class="flex min-w-0 items-center gap-2 text-sm text-muted">
+  <span class="shrink-0">Sortuj:</span>
+  <app-select-dropdown
+    class="min-w-42"
     [value]="value()"
-    (change)="onChange($event)"
-  >
-    @for (option of options; track option.value) {
-      <option [value]="option.value">{{ option.label }}</option>
-    }
-  </select>
+    [options]="options"
+    (valueChange)="onSortChange($event)"
+  />
 </label>

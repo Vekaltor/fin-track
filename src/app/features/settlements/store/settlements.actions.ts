@@ -47,13 +47,13 @@ export const SettlementsActions = createActionGroup({
     'Delete Entry Failure': props<{error: string}>(),
 
     'Toggle Entry Expanded': props<{entryId: string}>(),
-    'Pay Installment': props<{
+    'Pay Installments': props<{
       groupId: string;
       entryId: string;
-      installmentId: string;
+      installmentIds: readonly string[];
     }>(),
-    'Pay Installment Success': props<{group: SettlementGroup}>(),
-    'Pay Installment Failure': props<{error: string}>(),
+    'Pay Installments Success': props<{group: SettlementGroup}>(),
+    'Pay Installments Failure': props<{error: string}>(),
 
     'Archive Entry': props<{groupId: string; entryId: string}>(),
     'Archive Entry Success': props<{group: SettlementGroup}>(),

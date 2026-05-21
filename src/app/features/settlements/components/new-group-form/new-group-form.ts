@@ -1,31 +1,50 @@
 import {AsyncPipe} from '@angular/common';
-import {Component, inject, signal, WritableSignal} from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {AppLabeledField} from '@shared/components/ui/app-labeled-field/app-labeled-field';
+import {Component, inject, model, ModelSignal, output, OutputEmitterRef} from '@angular/core';
+import {form, required, submit} from '@angular/forms/signals';
+import {CreateGroupPayload} from '@core/models/create-group-payload.interface';
+import {TextField} from '@shared/components/forms/text-field/text-field';
 import {SettlementsFacade} from '../../store/settlements.facade';
 import {FormActions} from '../ui/form-actions/form-actions';
 
+interface NewGroupFormModel {
+  readonly name: string;
+}
+
 @Component({
   selector: 'app-new-group-form',
-  imports: [AsyncPipe, FormsModule, AppLabeledField, FormActions],
+  imports: [AsyncPipe, TextField, FormActions],
   templateUrl: './new-group-form.html',
 })
 export class NewGroupForm {
   protected readonly facade: SettlementsFacade = inject(SettlementsFacade);
 
-  protected readonly groupName: WritableSignal<string> = signal('');
+  public readonly created: OutputEmitterRef<void> = output<void>();
+
+  protected readonly formModel: ModelSignal<NewGroupFormModel> = model<NewGroupFormModel>({
+    name: '',
+  });
+
+  protected readonly groupForm = form(this.formModel, (schema): void => {
+    required(schema.name, {message: 'Nazwa grupy jest wymagana'});
+  });
 
   protected onCancel(): void {
-    this.groupName.set('');
+    this.formModel.set({name: ''});
     this.facade.hideNewGroupForm();
   }
 
-  protected onSubmit(): void {
-    const name: string = this.groupName().trim();
-    if (!name) {
-      return;
-    }
-    this.facade.createGroup({name});
-    this.groupName.set('');
+  protected handleSubmit(event: SubmitEvent): void {
+    event.preventDefault();
+    this.groupForm().markAsTouched();
+    void submit(this.groupForm, {
+      action: async (instance): Promise<void> => {
+        const name: string = instance.name().value().trim();
+        if (!name) {
+          return;
+        }
+        this.facade.createGroup({name} satisfies CreateGroupPayload);
+        this.formModel.set({name: ''});
+      },
+    });
   }
 }

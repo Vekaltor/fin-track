@@ -1,5 +1,5 @@
 export enum GroupColor {
-  Blue = 'blue',
-  Green = 'green',
-  Orange = 'orange',
+  BLUE = 'blue',
+  GREEN = 'green',
+  ORANGE = 'orange',
 }

@@ -9,6 +9,10 @@ import {InstallmentStatus} from '@core/models/installment-status.enum';
 import {Installment} from '@core/models/installment.interface';
 import {SettlementEntry} from '@core/models/settlement-entry.interface';
 import {SettlementGroup} from '@core/models/settlement-group.interface';
+import {
+  markInstallmentsPaidAndReschedule,
+  resolveInstallmentSchedule,
+} from '@core/utils/installment-schedule.util';
 import {SettlementsService} from './settlements-service';
 
 @Injectable({providedIn: 'root'})
@@ -21,7 +25,7 @@ export class SettlementsMockService extends SettlementsService {
   }
 
   public override createGroup(payload: CreateGroupPayload): Observable<SettlementGroup> {
-    const colors: GroupColor[] = [GroupColor.Blue, GroupColor.Green, GroupColor.Orange];
+    const colors: GroupColor[] = [GroupColor.BLUE, GroupColor.GREEN, GroupColor.ORANGE];
     const group: SettlementGroup = {
       id: `group-${crypto.randomUUID()}`,
       name: payload.name.trim(),
@@ -53,17 +57,19 @@ export class SettlementsMockService extends SettlementsService {
           id: `${entryId}-inst-${index + 1}`,
           index: index + 1,
           amount: inst.amount,
+          plannedDueDate: inst.dueDate,
           dueDate: inst.dueDate,
           note: inst.note,
-          status: InstallmentStatus.Unpaid,
+          status: InstallmentStatus.UNPAID,
         }))
       : [
           {
             id: `${entryId}-inst-1`,
             index: 1,
             amount: payload.totalAmount,
+            plannedDueDate: payload.dueDate,
             dueDate: payload.dueDate,
-            status: InstallmentStatus.Unpaid,
+            status: InstallmentStatus.UNPAID,
           },
         ];
 
@@ -75,8 +81,10 @@ export class SettlementsMockService extends SettlementsService {
       date: payload.dueDate,
       totalAmount: payload.totalAmount,
       type: directionToEntryType(payload.direction),
-      status: EntryStatus.Open,
+      status: EntryStatus.OPEN,
       installments,
+      installmentIntervalAmount: payload.installmentIntervalAmount,
+      installmentIntervalUnit: payload.installmentIntervalUnit,
     };
 
     const group: SettlementGroup = this.groups[groupIndex]!;
@@ -94,33 +102,34 @@ export class SettlementsMockService extends SettlementsService {
     );
   }
 
-  public override payInstallment(
+  public override payInstallments(
     groupId: string,
     entryId: string,
-    installmentId: string
+    installmentIds: readonly string[]
   ): Observable<SettlementGroup> {
+    const paidAt: string = new Date().toISOString().slice(0, 10);
+
     return this.updateGroupEntries(groupId, (entries) =>
       entries.map((entry) => {
         if (entry.id !== entryId) {
           return entry;
         }
-        const installments: Installment[] = entry.installments.map((inst) =>
-          inst.id === installmentId
-            ? {
-                ...inst,
-                status: InstallmentStatus.Paid,
-                paidAt: new Date().toISOString().slice(0, 10),
-                paymentMethod: inst.paymentMethod ?? 'Przelew',
-              }
-            : inst
+
+        const schedule = resolveInstallmentSchedule(entry);
+        const installments: Installment[] = markInstallmentsPaidAndReschedule(
+          entry.installments,
+          installmentIds,
+          paidAt,
+          schedule
         );
         const allPaid: boolean = installments.every(
-          (i) => i.status === InstallmentStatus.Paid
+          (i) => i.status === InstallmentStatus.PAID
         );
+
         return {
           ...entry,
           installments,
-          status: allPaid ? EntryStatus.Settled : entry.status,
+          status: allPaid ? EntryStatus.SETTLED : entry.status,
         };
       })
     );
@@ -129,7 +138,7 @@ export class SettlementsMockService extends SettlementsService {
   public override archiveEntry(groupId: string, entryId: string): Observable<SettlementGroup> {
     return this.updateGroupEntries(groupId, (entries) =>
       entries.map((entry) =>
-        entry.id === entryId ? {...entry, status: EntryStatus.Archived} : entry
+        entry.id === entryId ? {...entry, status: EntryStatus.ARCHIVED} : entry
       )
     );
   }

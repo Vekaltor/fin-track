@@ -1,105 +1,88 @@
-<div class="border-t border-gray-100 bg-gray-50/50 p-5">
-  <app-section-title [title]="'Nowy wpis - ' + groupName()" />
+<form
+  class="border-t border-gray-100 bg-gray-50/50 p-5"
+  (submit)="handleSubmit($event)"
+>
+  <app-section-title [title]="'Nowy wpis - ' + groupName()"/>
 
-  <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-    <app-labeled-field label="Kierunek">
-      <select
-        class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"
-        [ngModel]="direction()"
-        (ngModelChange)="direction.set($event)"
-      >
-        @for (opt of directionOptions; track opt.value) {
-          <option [ngValue]="opt.value">{{ opt.label }}</option>
-        }
-      </select>
-    </app-labeled-field>
+  <div class="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <app-select-field
+      [field]="entryForm.direction"
+      label="Kierunek"
+      [options]="directionOptions"
+    />
 
-    <app-labeled-field label="Osoba">
-      <input
-        class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"
-        placeholder="Imię nazwisko"
-        [ngModel]="personName()"
-        (ngModelChange)="personName.set($event)"
+    <app-text-field
+      [field]="entryForm.personName"
+      label="Osoba"
+      placeholder="Imię nazwisko"
+    />
+
+    <app-text-field
+      [field]="entryForm.totalAmount"
+      label="Kwota łączna (zł)"
+      placeholder="np. 1 700 lub 99,50"
+      inputMode="decimal"
+    />
+
+    <app-text-field
+      [field]="entryForm.description"
+      label="Opis"
+      placeholder="Za co?"
+    />
+
+    @if (!entryForm.splitIntoInstallments().value()) {
+      <app-date-field
+        [field]="entryForm.dueDate"
+        label="Termin"
       />
-    </app-labeled-field>
-
-    <app-labeled-field label="Kwota łączna (zł)">
-      <input
-        type="number"
-        class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"
-        placeholder="0"
-        [ngModel]="totalAmount()"
-        (ngModelChange)="totalAmount.set($event)"
-      />
-    </app-labeled-field>
-
-    <app-labeled-field label="Opis">
-      <input
-        class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"
-        placeholder="Za co?"
-        [ngModel]="description()"
-        (ngModelChange)="description.set($event)"
-      />
-    </app-labeled-field>
-
-    <app-labeled-field label="Termin">
-      <input
-        type="date"
-        class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"
-        [ngModel]="dueDate()"
-        (ngModelChange)="dueDate.set($event)"
-      />
-    </app-labeled-field>
+    }
 
     <div class="flex items-end pb-1">
-      <app-checkbox
-        [checked]="splitIntoInstallments()"
-        (checkedChange)="splitIntoInstallments.set($event)"
-      >
+      <app-checkbox-field [field]="entryForm.splitIntoInstallments">
         Rozbij na raty
-      </app-checkbox>
+      </app-checkbox-field>
     </div>
   </div>
 
-  @if (splitIntoInstallments()) {
-    <div class="mt-4 grid grid-cols-1 gap-3 md:grid-cols-3">
-      <app-labeled-field label="Kwota">
-        <input
-          type="number"
-          class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"
-          [ngModel]="installmentAmount()"
-          (ngModelChange)="installmentAmount.set($event)"
-        />
-      </app-labeled-field>
-      <app-labeled-field label="Termin">
-        <input
-          type="date"
-          class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"
-          [ngModel]="installmentDueDate()"
-          (ngModelChange)="installmentDueDate.set($event)"
-        />
-      </app-labeled-field>
-      <app-labeled-field label="Notatka">
-        <input
-          class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"
-          placeholder="Opcjonalnie"
-          [ngModel]="installmentNote()"
-          (ngModelChange)="installmentNote.set($event)"
-        />
-      </app-labeled-field>
+  @if (entryForm.splitIntoInstallments().value()) {
+    <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <app-number-field
+        [field]="entryForm.installmentCount"
+        label="Liczba rat"
+        placeholder="np. 12"
+      />
+      <div>
+        <app-input-label label="Odstęp między ratami" className="mb-0"/>
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <app-number-field
+            [field]="entryForm.installmentIntervalAmount"
+            label=""
+            class="shrink"
+            placeholder="np. 12"
+          />
+          <app-select-field
+            [field]="entryForm.installmentIntervalUnit"
+            label=""
+            class="min-w-50"
+            placeholder="Wybierz okres"
+            [options]="installmentIntervalUnitOptions"
+            [className]="'h-[41.6px]'"
+          />
+        </div>
+      </div>
+      <app-date-field
+        [field]="entryForm.dueDate"
+        label="Termin pierwszej raty"
+      />
     </div>
-    <app-button variant="link" className="mt-2" (clicked)="splitIntoInstallments.set(true)">
-      + Dodaj ratę
-    </app-button>
+    <p class="mt-2 text-xs text-muted">
+      Kolejne raty liczone od pierwszego terminu według wybranego odstępu. Kwota dzielona równo.
+    </p>
   }
 
   <div class="mt-4">
-    <app-form-actions
-      [loading]="saving()"
-      (cancelled)="onCancel()"
-      (submitted)="onSubmit()"
-    >
+    <app-form-actions [loading]="saving()" (cancelled)="onCancel()">
       Zapisz
     </app-form-actions>
   </div>
-</div>
+</form>

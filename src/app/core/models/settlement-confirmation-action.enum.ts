@@ -1,5 +1,5 @@
 export enum SettlementConfirmationAction {
-  DeleteGroup = 'delete_group',
-  DeleteEntry = 'delete_entry',
-  ArchiveEntry = 'archive_entry',
+  DELETE_GROUP = 'delete_group',
+  DELETE_ENTRY = 'delete_entry',
+  ARCHIVE_ENTRY = 'archive_entry',
 }

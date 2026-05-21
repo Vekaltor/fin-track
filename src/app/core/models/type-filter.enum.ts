@@ -1,5 +1,5 @@
 export enum TypeFilter {
-  All = 'all',
-  Receivable = 'receivable',
-  Debt = 'debt',
+  ALL = 'all',
+  RECEIVABLE = 'receivable',
+  DEBT = 'debt',
 }

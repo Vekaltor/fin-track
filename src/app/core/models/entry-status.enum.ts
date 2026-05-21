@@ -1,6 +1,6 @@
 export enum EntryStatus {
-  Open = 'open',
-  Overdue = 'overdue',
-  Settled = 'settled',
-  Archived = 'archived',
+  OPEN = 'open',
+  OVERDUE = 'overdue',
+  SETTLED = 'settled',
+  ARCHIVED = 'archived',
 }

@@ -1,6 +1,6 @@
 import {Component, computed, input, InputSignal, Signal} from '@angular/core';
-import {AmountColorDirective} from '@shared/directives/amount-color.directive';
-import {CurrencyPlnPipe} from '@shared/pipes/currency-pln.pipe';
+import {AmountColorDirective} from '@shared/directives/amount-color-directive';
+import {CurrencyPlnPipe} from '@shared/pipes/currency-pln-pipe';
 import {AmountTone} from '@shared/models/types/amount-tone.type';
 import {EntryStatus} from '@core/models/entry-status.enum';
 import {EntryType} from '@core/models/entry-type.enum';
@@ -16,10 +16,10 @@ export class EntryAmountBlock {
   public readonly entry: InputSignal<SettlementEntry> = input.required<SettlementEntry>();
 
   protected readonly amountTone: Signal<AmountTone> = computed(() => {
-    if (this.entry().status === EntryStatus.Archived) {
+    if (this.entry().status === EntryStatus.ARCHIVED) {
       return 'muted';
     }
-    return this.entry().type === EntryType.Receivable ? 'positive' : 'negative';
+    return this.entry().type === EntryType.RECEIVABLE ? 'positive' : 'negative';
   });
 
   protected readonly progressPercent: Signal<number> = computed(() =>

@@ -62,10 +62,10 @@ export class GroupPanel {
     this.facade.openArchiveEntryConfirmation(this.group().id, entryId, entry.personName);
   }
 
-  protected onPayInstallment(event: {
+  protected onPayInstallments(event: {
     entryId: string;
-    installmentId: string;
+    installmentIds: readonly string[];
   }): void {
-    this.facade.payInstallment(this.group().id, event.entryId, event.installmentId);
+    this.facade.payInstallments(this.group().id, event.entryId, event.installmentIds);
   }
 }

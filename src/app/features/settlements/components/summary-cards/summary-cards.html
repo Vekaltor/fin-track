@@ -28,7 +28,7 @@
         class="font-amount text-3xl font-bold tracking-tight sm:text-4xl"
         [appAmountColor]="balanceTone(summary)"
       >
-        {{ summary.balance | currencyPln: true }}
+        {{ summary.balance | appCurrencyPln: true }}
       </p>
     </div>
   </div>

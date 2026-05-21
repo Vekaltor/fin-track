@@ -1,4 +1,4 @@
 export enum EntryType {
-  Debt = 'debt',
-  Receivable = 'receivable',
+  DEBT = 'debt',
+  RECEIVABLE = 'receivable',
 }

@@ -1,4 +1,4 @@
 export enum InstallmentStatus {
-  Paid = 'paid',
-  Unpaid = 'unpaid',
+  PAID = 'paid',
+  UNPAID = 'unpaid',
 }

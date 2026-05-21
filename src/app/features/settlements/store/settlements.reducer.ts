@@ -69,7 +69,7 @@ export const settlementsReducer = createReducer(
     SettlementsActions.deleteGroup,
     SettlementsActions.createEntry,
     SettlementsActions.deleteEntry,
-    SettlementsActions.payInstallment,
+    SettlementsActions.payInstallments,
     SettlementsActions.archiveEntry,
     (state): SettlementsState => ({...state, saving: true, error: null})
   ),
@@ -127,7 +127,7 @@ export const settlementsReducer = createReducer(
   on(
     SettlementsActions.createEntrySuccess,
     SettlementsActions.deleteEntrySuccess,
-    SettlementsActions.payInstallmentSuccess,
+    SettlementsActions.payInstallmentsSuccess,
     SettlementsActions.archiveEntrySuccess,
     (state, {group}): SettlementsState => ({
       ...state,
@@ -143,7 +143,7 @@ export const settlementsReducer = createReducer(
   on(
     SettlementsActions.createEntryFailure,
     SettlementsActions.deleteEntryFailure,
-    SettlementsActions.payInstallmentFailure,
+    SettlementsActions.payInstallmentsFailure,
     SettlementsActions.archiveEntryFailure,
     (state, {error}): SettlementsState => ({
       ...state,

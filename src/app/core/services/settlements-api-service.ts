@@ -36,14 +36,14 @@ export class SettlementsApiService extends SettlementsService {
     );
   }
 
-  public override payInstallment(
+  public override payInstallments(
     groupId: string,
     entryId: string,
-    installmentId: string
+    installmentIds: readonly string[]
   ): Observable<SettlementGroup> {
     return this.http.post<SettlementGroup>(
-      `${this.apiUrl}/groups/${groupId}/entries/${entryId}/installments/${installmentId}/pay`,
-      {}
+      `${this.apiUrl}/groups/${groupId}/entries/${entryId}/installments/pay`,
+      {installmentIds}
     );
   }
 

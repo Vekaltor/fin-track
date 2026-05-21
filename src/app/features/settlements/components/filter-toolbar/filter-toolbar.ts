@@ -1,6 +1,6 @@
 import {AsyncPipe} from '@angular/common';
 import {Component, inject} from '@angular/core';
-import {STATUS_FILTER_OPTIONS, TYPE_FILTER_OPTIONS} from '../../constants/filter-labels.constant';
+import {STATUS_FILTER_OPTIONS, TYPE_FILTER_OPTIONS} from '../../constants/filter-labels';
 import {SettlementsFacade} from '../../store/settlements.facade';
 import {SortField} from '@core/models/sort-field.enum';
 import {StatusFilter} from '@core/models/status-filter.enum';

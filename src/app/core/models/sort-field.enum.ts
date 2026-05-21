@@ -1,5 +1,5 @@
 export enum SortField {
-  Date = 'date',
-  Amount = 'amount',
-  Name = 'name',
+  DATE = 'date',
+  AMOUNT = 'amount',
+  NAME = 'name',
 }

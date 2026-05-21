@@ -6,9 +6,9 @@ import {GroupColor} from '@core/models/group-color.enum';
 })
 export class GroupColorClassPipe implements PipeTransform {
   private readonly map: Record<GroupColor, string> = {
-    [GroupColor.Blue]: 'bg-group-blue',
-    [GroupColor.Green]: 'bg-group-green',
-    [GroupColor.Orange]: 'bg-group-orange',
+    [GroupColor.BLUE]: 'bg-group-blue',
+    [GroupColor.GREEN]: 'bg-group-green',
+    [GroupColor.ORANGE]: 'bg-group-orange',
   };
 
   public transform(color: GroupColor): string {

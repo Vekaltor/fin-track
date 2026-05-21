@@ -26,8 +26,8 @@ export class EntryRow {
   public readonly toggleExpanded: OutputEmitterRef<void> = output<void>();
   public readonly deleteEntry: OutputEmitterRef<void> = output<void>();
   public readonly archiveEntry: OutputEmitterRef<void> = output<void>();
-  public readonly payInstallment: OutputEmitterRef<{
+  public readonly payInstallments: OutputEmitterRef<{
     entryId: string;
-    installmentId: string;
+    installmentIds: readonly string[];
   }> = output();
 }
