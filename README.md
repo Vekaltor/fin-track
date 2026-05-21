@@ -22,8 +22,8 @@ The app itself lets you track bank accounts, browse transaction history, filter 
 
 - Angular 21
 - TypeScript
-- RxJS
-- TailwindCSS v.4.3
+- RxJS v 7.8.0
+- TailwindCSS v.4.3.0
 
 ---
 
