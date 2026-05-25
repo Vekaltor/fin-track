@@ -9,8 +9,8 @@ import {AmountTone} from '@shared/models/types/amount-tone.type';
   templateUrl: './summary-card.html',
 })
 export class SummaryCard {
-  public readonly label: InputSignal<string> = input.required<string>();
-  public readonly amount: InputSignal<number> = input.required<number>();
+  public readonly label: InputSignal<string> = input.required();
+  public readonly amount: InputSignal<number> = input.required();
+  public readonly backgroundClass: InputSignal<string> = input.required();
   public readonly tone: InputSignal<AmountTone> = input<AmountTone>('neutral');
-  public readonly backgroundClass: InputSignal<string> = input.required<string>();
 }

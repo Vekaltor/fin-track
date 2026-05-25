@@ -26,11 +26,11 @@ export class EntryRow {
   private readonly modalService: ModalService = inject(ModalService);
 
   public readonly entry: InputSignal<Settlement> = input.required<Settlement>();
-  public readonly groupId: InputSignal<string> = input.required<string>();
-  public readonly expanded: InputSignal<boolean> = input<boolean>(false);
-  public readonly saving: InputSignal<boolean> = input<boolean>(false);
+  public readonly groupId: InputSignal<string> = input.required();
+  public readonly expanded: InputSignal<boolean> = input(false);
+  public readonly saving: InputSignal<boolean> = input(false);
 
-  public readonly toggleExpanded: OutputEmitterRef<void> = output<void>();
+  public readonly toggleExpanded: OutputEmitterRef<void> = output();
 
   protected deleteEntry(): void {
     this.modalService.open<ConfirmationDialogViewModel>({

@@ -18,11 +18,11 @@ export class GroupPanel {
   protected readonly facade: SettlementsFacade = inject(SettlementsFacade);
   private readonly modalService: ModalService = inject(ModalService);
 
+  public readonly group: InputSignal<FilteredSettlementGroup> = input.required();
+
   protected readonly isSaving: Signal<boolean> = this.facade.isSaving;
   protected readonly showSettlementForm: WritableSignal<boolean> = signal(false);
   protected readonly expandedEntryIds: WritableSignal<Set<string>> = signal(new Set());
-
-  public readonly group: InputSignal<FilteredSettlementGroup> = input.required();
 
   protected onShowEntryForm(): void {
     this.showSettlementForm.set(true);
@@ -37,7 +37,7 @@ export class GroupPanel {
   }
 
   protected onToggleExpanded(entryId: string): void {
-    this.expandedEntryIds.update((ids) => {
+    this.expandedEntryIds.update((ids: Set<string>): Set<string> => {
       const next = new Set(ids);
       next.has(entryId) ? next.delete(entryId) : next.add(entryId);
       return next;

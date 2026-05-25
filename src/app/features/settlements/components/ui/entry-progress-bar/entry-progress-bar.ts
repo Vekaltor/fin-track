@@ -6,8 +6,8 @@ import {SettlementType} from '@core/models/settlement-type.enum';
   templateUrl: './entry-progress-bar.html',
 })
 export class EntryProgressBar {
-  public readonly percent: InputSignal<number> = input.required<number>();
-  public readonly type: InputSignal<SettlementType> = input.required<SettlementType>();
+  public readonly percent: InputSignal<number> = input.required();
+  public readonly type: InputSignal<SettlementType> = input.required();
 
   protected readonly EntryType = SettlementType;
 }

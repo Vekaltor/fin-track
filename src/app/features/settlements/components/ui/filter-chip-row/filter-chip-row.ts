@@ -12,11 +12,10 @@ export interface FilterChipOption<T extends string> {
   templateUrl: './filter-chip-row.html',
 })
 export class FilterChipRow<T extends string> {
-  public readonly options: InputSignal<readonly FilterChipOption<T>[]> =
-    input.required<readonly FilterChipOption<T>[]>();
-  public readonly activeValue: InputSignal<T> = input.required<T>();
+  public readonly options: InputSignal<FilterChipOption<T>[]> = input.required();
+  public readonly activeValue: InputSignal<T> = input.required();
 
-  public readonly selected: OutputEmitterRef<T> = output<T>();
+  public readonly selected: OutputEmitterRef<T> = output();
 
   protected onSelect(value: T): void {
     this.selected.emit(value);

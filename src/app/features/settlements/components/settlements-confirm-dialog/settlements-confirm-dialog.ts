@@ -1,7 +1,5 @@
-import {Component, computed, inject} from '@angular/core';
+import {Component, computed, inject, Signal} from '@angular/core';
 import {SettlementConfirmationAction} from '@features/settlements/models/settlement-confirmation-action.enum';
-import {provideIcons} from '@ng-icons/core';
-import {heroArchiveBox, heroExclamationTriangle, heroTrash} from '@ng-icons/heroicons/outline';
 import {AppModal} from '@shared/components/ui/app-modal/app-modal';
 import {ModalService} from '@shared/services/modal.service';
 import {SettlementsFacade} from '../../store/settlements.facade';
@@ -13,19 +11,18 @@ import {ConfirmationDialogViewModel} from '@features/settlements/models/confirma
 @Component({
   selector: 'app-settlements-confirm-dialog',
   imports: [AppModal, ConfirmationDeleteGroup, ConfirmationDeleteEntry, ConfirmationArchiveEntry],
-  providers: [provideIcons({heroArchiveBox, heroExclamationTriangle, heroTrash})],
   templateUrl: './settlements-confirm-dialog.html',
 })
 export class SettlementsConfirmDialog {
-  private readonly facade = inject(SettlementsFacade);
-  private readonly modalService = inject(ModalService);
+  private readonly facade: SettlementsFacade = inject(SettlementsFacade);
+  private readonly modalService: ModalService = inject(ModalService);
 
   protected readonly SettlementConfirmationAction = SettlementConfirmationAction;
   protected readonly config = computed(() => this.modalService.getData<ConfirmationDialogViewModel>());
-  protected readonly isSaving = this.facade.isSaving;
+  protected readonly isSaving: Signal<boolean> = this.facade.isSaving;
 
   protected onConfirm(): void {
-    const config = this.config();
+    const config: ConfirmationDialogViewModel | null = this.config();
     if (!config) return;
 
     switch (config.action) {

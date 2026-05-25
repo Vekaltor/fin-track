@@ -5,6 +5,7 @@ import {
   InputSignal,
   output,
   OutputEmitterRef,
+  Signal,
   signal,
   WritableSignal,
 } from '@angular/core';
@@ -13,6 +14,7 @@ import {AppButton} from '@shared/components/ui/app-button/app-button';
 import {InstallmentPanelHeader} from '../ui/installment-panel-header/installment-panel-header';
 import {InstallmentRow} from '../installment-row/installment-row';
 import {Settlement} from '@core/models/settlement.interface';
+import {Installment} from '@core/models/installment.interface';
 
 @Component({
   selector: 'app-installment-panel',
@@ -20,20 +22,20 @@ import {Settlement} from '@core/models/settlement.interface';
   templateUrl: './installment-panel.html',
 })
 export class InstallmentPanel {
-  public readonly entry: InputSignal<Settlement> = input.required<Settlement>();
-  public readonly saving: InputSignal<boolean> = input<boolean>(false);
+  public readonly entry: InputSignal<Settlement> = input.required();
+  public readonly saving: InputSignal<boolean> = input(false);
 
   public readonly payInstallments: OutputEmitterRef<string[]> = output();
 
   protected readonly selectedIds: WritableSignal<Set<string>> = signal(new Set<string>());
 
-  protected readonly unpaidInstallments = computed(() =>
+  protected readonly unpaidInstallments: Signal<Installment[]> = computed(() =>
     this.entry().installments.filter((inst) => inst.status === InstallmentStatus.UNPAID)
   );
 
-  protected readonly selectedCount = computed(() => this.selectedIds().size);
+  protected readonly selectedCount: Signal<number> = computed(() => this.selectedIds().size);
 
-  protected readonly hasSelection = computed(() => this.selectedCount() > 0);
+  protected readonly hasSelection: Signal<boolean> = computed(() => this.selectedCount() > 0);
 
   protected isSelected(installmentId: string): boolean {
     return this.selectedIds().has(installmentId);

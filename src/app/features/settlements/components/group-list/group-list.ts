@@ -10,6 +10,8 @@ import {toSignal} from '@angular/core/rxjs-interop';
 })
 export class GroupList {
   protected readonly facade: SettlementsFacade = inject(SettlementsFacade);
+
   protected readonly vm = toSignal(this.facade.vm$);
+
   protected readonly isLoading: Signal<boolean> = this.facade.isLoadingGroups;
 }

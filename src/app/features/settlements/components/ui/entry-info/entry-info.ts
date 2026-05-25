@@ -8,6 +8,7 @@ import {getEntryProgressPercent} from '@features/settlements/helpers/settlement-
 import {EntryProgressBar} from '../entry-progress-bar/entry-progress-bar';
 import {SETTLEMENT_TYPE_LABELS} from '@features/settlements/constants/settlement-type-labels';
 import {SETTLEMENT_STATUS_LABELS} from '@features/settlements/constants/settlement-status-labels';
+import {SettlementStatus} from '@core/models/settlement-status.enum';
 
 @Component({
   selector: 'app-entry-info',
@@ -18,8 +19,8 @@ export class EntryInfo {
   public readonly entry: InputSignal<Settlement> = input.required<Settlement>();
 
   protected readonly EntryType = SettlementType;
-  protected readonly typeLabels = SETTLEMENT_TYPE_LABELS;
-  protected readonly statusLabels = SETTLEMENT_STATUS_LABELS;
+  protected readonly typeLabels: Record<SettlementType, string> = SETTLEMENT_TYPE_LABELS;
+  protected readonly statusLabels: Record<SettlementStatus, string> = SETTLEMENT_STATUS_LABELS;
   protected readonly statusBadgeVariant = SETTLEMENT_STATUS_BADGE_VARIANT;
 
   protected readonly progressPercent: Signal<number> = computed(() =>

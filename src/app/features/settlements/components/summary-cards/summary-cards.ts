@@ -14,6 +14,7 @@ import {SettlementsSummary} from '@features/settlements/models/settlements-summa
 })
 export class SummaryCards {
   private readonly facade: SettlementsFacade = inject(SettlementsFacade);
+
   protected readonly vm = toSignal(this.facade.vm$);
 
   public readonly summary: SettlementsSummary | undefined = this.vm()?.summary;

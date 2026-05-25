@@ -20,6 +20,7 @@ import {NumberField} from '@shared/components/forms/number-field/number-field';
 import {InputLabel} from '@shared/components/forms/input-label/input-label';
 import {DateField} from '@shared/components/forms/date-field/date-field';
 import {FilteredSettlementGroup} from '@features/settlements/models/filtered-settlement-group.interface';
+import {SelectOption} from '@shared/models/types/select-option.type';
 
 interface EntryFormModel {
   direction: SettlementDirection;
@@ -49,15 +50,15 @@ interface EntryFormModel {
 })
 export class EntryForm {
   public readonly group: InputSignal<FilteredSettlementGroup> = input.required<FilteredSettlementGroup>();
-  public readonly groupId: InputSignal<string> = input.required<string>();
-  public readonly groupName: InputSignal<string> = input.required<string>();
-  public readonly saving: InputSignal<boolean> = input<boolean>(false);
+  public readonly groupId: InputSignal<string> = input.required();
+  public readonly groupName: InputSignal<string> = input.required();
+  public readonly saving: InputSignal<boolean> = input(false);
 
   public readonly saved: OutputEmitterRef<CreateSettlementEntryPayload> = output<CreateSettlementEntryPayload>();
-  public readonly cancelled: OutputEmitterRef<void> = output<void>();
+  public readonly cancelled: OutputEmitterRef<void> = output();
 
-  protected readonly directionOptions = SETTLEMENT_DIRECTION_OPTIONS;
-  protected readonly installmentIntervalUnitOptions = INSTALLMENT_INTERVAL_UNIT_OPTIONS;
+  protected readonly directionOptions: SelectOption<SettlementDirection>[] = SETTLEMENT_DIRECTION_OPTIONS;
+  protected readonly installmentIntervalUnitOptions: SelectOption<InstallmentIntervalUnit>[] = INSTALLMENT_INTERVAL_UNIT_OPTIONS;
 
   protected readonly formModel: ModelSignal<EntryFormModel> = model<EntryFormModel>({
     direction: SettlementDirection.TO_RECEIVE,

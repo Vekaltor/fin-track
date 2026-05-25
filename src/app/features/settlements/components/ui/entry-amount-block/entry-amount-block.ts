@@ -13,7 +13,7 @@ import {getEntryProgressPercent} from '@features/settlements/helpers/settlement-
   templateUrl: './entry-amount-block.html',
 })
 export class EntryAmountBlock {
-  public readonly entry: InputSignal<Settlement> = input.required<Settlement>();
+  public readonly entry: InputSignal<Settlement> = input.required();
 
   protected readonly amountTone: Signal<AmountTone> = computed(() => {
     if (this.entry().status === SettlementStatus.ARCHIVED) {
@@ -26,7 +26,7 @@ export class EntryAmountBlock {
     getEntryProgressPercent(this.entry())
   );
 
-  protected readonly installmentCount: Signal<number> = computed(
-    () => this.entry().installments.length
+  protected readonly installmentCount: Signal<number> = computed(() =>
+    this.entry().installments.length
   );
 }

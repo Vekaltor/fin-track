@@ -7,11 +7,11 @@ import {Component, input, InputSignal} from '@angular/core';
       @if (title()) {
         {{ title() }}
       } @else {
-        <ng-content />
+        <ng-content/>
       }
     </h4>
   `,
 })
 export class SectionTitle {
-  public readonly title: InputSignal<string> = input<string>('');
+  public readonly title: InputSignal<string> = input('');
 }

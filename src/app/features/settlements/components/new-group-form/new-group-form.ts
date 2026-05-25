@@ -17,9 +17,9 @@ interface NewGroupFormModel {
 export class NewGroupForm {
   protected readonly facade: SettlementsFacade = inject(SettlementsFacade);
 
-  public readonly closed: OutputEmitterRef<void> = output<void>();
+  public readonly closed: OutputEmitterRef<void> = output();
 
-  protected readonly formModel: ModelSignal<NewGroupFormModel> = model<NewGroupFormModel>({
+  protected readonly formModel: ModelSignal<NewGroupFormModel> = model({
     name: '',
   });
 

@@ -7,8 +7,8 @@ import {AppButton} from '@shared/components/ui/app-button/app-button';
   templateUrl: './form-actions.html',
 })
 export class FormActions {
-  public readonly loading: InputSignal<boolean> = input<boolean>(false);
+  public readonly loading: InputSignal<boolean> = input(false);
 
-  public readonly cancelled: OutputEmitterRef<void> = output<void>();
-  public readonly submitted: OutputEmitterRef<void> = output<void>();
+  public readonly cancelled: OutputEmitterRef<void> = output();
+  public readonly submitted: OutputEmitterRef<void> = output();
 }

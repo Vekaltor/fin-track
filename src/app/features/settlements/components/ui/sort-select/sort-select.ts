@@ -2,6 +2,7 @@ import {Component, input, InputSignal, output, OutputEmitterRef} from '@angular/
 import {SortField} from '@features/settlements/models/sort-field.enum';
 import {SORT_FIELD_OPTIONS} from '../../../constants/sort-field-options';
 import {SelectDropdown} from '@shared/components/forms/select-dropdown/select-dropdown';
+import {SelectOption} from '@shared/models/types/select-option.type';
 
 @Component({
   selector: 'app-sort-select',
@@ -9,11 +10,11 @@ import {SelectDropdown} from '@shared/components/forms/select-dropdown/select-dr
   templateUrl: './sort-select.html',
 })
 export class SortSelect {
-  public readonly value: InputSignal<SortField> = input.required<SortField>();
+  public readonly value: InputSignal<SortField> = input.required();
 
-  public readonly valueChange: OutputEmitterRef<SortField> = output<SortField>();
+  public readonly valueChange: OutputEmitterRef<SortField> = output();
 
-  protected readonly options = SORT_FIELD_OPTIONS;
+  protected readonly options: SelectOption<SortField>[] = SORT_FIELD_OPTIONS;
 
   protected onSortChange(sort: SortField): void {
     this.valueChange.emit(sort);

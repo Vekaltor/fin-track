@@ -1,11 +1,7 @@
-import {Component, computed, input, InputSignal, output, OutputEmitterRef} from '@angular/core';
-import {NgIcon, provideIcons} from '@ng-icons/core';
-import {heroCheck} from '@ng-icons/heroicons/outline';
+import {Component, computed, input, InputSignal, output, OutputEmitterRef, Signal} from '@angular/core';
+import {NgIcon} from '@ng-icons/core';
 import {InstallmentStatus} from '@core/models/installment-status.enum';
-import {
-  getPlannedDueDate,
-  isInstallmentRescheduled,
-} from '@features/settlements/helpers/installment-schedule';
+import {getPlannedDueDate, isInstallmentRescheduled,} from '@features/settlements/helpers/installment-schedule';
 import {AppButton} from '@shared/components/ui/app-button/app-button';
 import {CurrencyPlnPipe} from '@shared/pipes/currency-pln-pipe';
 import {ShortDatePlPipe} from '@shared/pipes/short-date-pipe';
@@ -14,28 +10,27 @@ import {Installment} from '@core/models/installment.interface';
 @Component({
   selector: 'app-installment-row',
   imports: [NgIcon, AppButton, CurrencyPlnPipe, ShortDatePlPipe],
-  providers: [provideIcons({heroCheck})],
   templateUrl: './installment-row.html',
 })
 export class InstallmentRow {
-  public readonly installment: InputSignal<Installment> = input.required<Installment>();
-  public readonly saving: InputSignal<boolean> = input<boolean>(false);
-  public readonly selected: InputSignal<boolean> = input<boolean>(false);
+  public readonly installment: InputSignal<Installment> = input.required();
+  public readonly saving: InputSignal<boolean> = input(false);
+  public readonly selected: InputSignal<boolean> = input(false);
 
-  public readonly pay: OutputEmitterRef<string> = output<string>();
-  public readonly selectionChange: OutputEmitterRef<boolean> = output<boolean>();
+  public readonly pay: OutputEmitterRef<string> = output();
+  public readonly selectionChange: OutputEmitterRef<boolean> = output();
 
   protected readonly InstallmentStatus = InstallmentStatus;
 
-  protected readonly isRescheduled = computed(() =>
+  protected readonly isRescheduled: Signal<boolean> = computed(() =>
     isInstallmentRescheduled(this.installment())
   );
 
-  protected readonly plannedDueDate = computed(() =>
+  protected readonly plannedDueDate: Signal<string> = computed(() =>
     getPlannedDueDate(this.installment())
   );
 
-  protected readonly isUnpaid = computed(
+  protected readonly isUnpaid: Signal<boolean> = computed(
     () => this.installment().status === InstallmentStatus.UNPAID
   );
 

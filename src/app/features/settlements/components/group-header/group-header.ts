@@ -14,8 +14,8 @@ import {FilteredSettlementGroup} from '@features/settlements/models/filtered-set
   templateUrl: './group-header.html',
 })
 export class GroupHeader {
-  public readonly group: InputSignal<FilteredSettlementGroup> = input.required<FilteredSettlementGroup>();
+  public readonly group: InputSignal<FilteredSettlementGroup> = input.required();
 
-  public readonly addEntry: OutputEmitterRef<void> = output<void>();
-  public readonly deleteGroup: OutputEmitterRef<void> = output<void>();
+  public readonly addEntry: OutputEmitterRef<void> = output();
+  public readonly deleteGroup: OutputEmitterRef<void> = output();
 }

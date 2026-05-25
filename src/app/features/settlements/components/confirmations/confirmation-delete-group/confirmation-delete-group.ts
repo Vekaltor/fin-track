@@ -11,8 +11,9 @@ import {ModalService} from '@shared/services/modal.service';
 export class ConfirmationDeleteGroup {
   private readonly modal: ModalService = inject(ModalService);
 
-  public readonly loading: InputSignal<boolean> = input<boolean>(false);
-  public readonly confirmed: OutputEmitterRef<void> = output<void>();
+  public readonly loading: InputSignal<boolean> = input(false);
+
+  public readonly confirmed: OutputEmitterRef<void> = output();
 
   protected onCancel(): void {
     this.modal.close();

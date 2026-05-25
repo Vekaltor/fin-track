@@ -8,5 +8,5 @@ import {GroupTotals} from '@features/settlements/models/group-totals.interface';
   templateUrl: './group-totals-display.html',
 })
 export class GroupTotalsDisplay {
-  public readonly totals: InputSignal<GroupTotals> = input.required<GroupTotals>();
+  public readonly totals: InputSignal<GroupTotals> = input.required();
 }

@@ -11,9 +11,10 @@ import {ModalService} from '@shared/services/modal.service';
 export class ConfirmationArchiveEntry {
   private readonly modal: ModalService = inject(ModalService);
 
-  public readonly personName: InputSignal<string> = input<string>('');
-  public readonly loading: InputSignal<boolean> = input<boolean>(false);
-  public readonly confirmed: OutputEmitterRef<void> = output<void>();
+  public readonly personName: InputSignal<string> = input('');
+  public readonly loading: InputSignal<boolean> = input(false);
+
+  public readonly confirmed: OutputEmitterRef<void> = output();
 
   protected onCancel(): void {
     this.modal.close();
