@@ -2,13 +2,13 @@
   <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
     <app-summary-card
       label="Do otrzymania"
-      [amount]="summary?.totalToReceive ?? 0"
+      [amount]="summary()?.totalToReceive ?? 0"
       tone="positive"
       backgroundClass="bg-summary-receive-bg"
     />
     <app-summary-card
       label="Do zapłacenia"
-      [amount]="summary?.totalToPay ?? 0"
+      [amount]="summary()?.totalToPay ?? 0"
       tone="negative"
       backgroundClass="bg-summary-pay-bg"
     />
@@ -27,7 +27,7 @@
       class="font-amount text-3xl font-bold tracking-tight sm:text-4xl"
       [appAmountColor]="balanceTone()"
     >
-      {{ summary?.balance | appCurrencyPln: true }}
+      {{ summary()?.balance | appCurrencyPln: true }}
     </p>
   </div>
 </div>

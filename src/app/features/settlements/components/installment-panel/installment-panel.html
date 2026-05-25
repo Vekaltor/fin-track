@@ -4,7 +4,7 @@
     @if (hasSelection()) {
       <app-button
         variant="primary"
-        className="px-3! !py-1.5 text-xs"
+        className="px-3! py-1.5! text-xs"
         [loading]="saving()"
         (clicked)="onPaySelected()"
       >
@@ -25,8 +25,7 @@
   </div>
   @if (unpaidInstallments().length > 1) {
     <p class="mt-2 text-xs text-muted">
-      Zaznacz kilka rat i zapłać naraz - kolejne terminy przeliczą się wcześniej (plan vs aktualny
-      termin w tabeli).
+      Zaznacz kilka rat i zapłać naraz - a system wyliczy automatycznie kolejne terminy.
     </p>
   }
 </div>

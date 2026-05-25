@@ -19,7 +19,6 @@ import {
     NewGroupForm,
     GroupList,
     SettlementsConfirmDialog,
-
   ],
   templateUrl: './settlements-page.html',
 })

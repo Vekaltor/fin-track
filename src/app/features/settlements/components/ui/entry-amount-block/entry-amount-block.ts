@@ -6,6 +6,7 @@ import {SettlementStatus} from '@core/models/settlement-status.enum';
 import {SettlementType} from '@core/models/settlement-type.enum';
 import {Settlement} from '@core/models/settlement.interface';
 import {getEntryProgressPercent} from '@features/settlements/helpers/settlement-calculations';
+import {getInstallmentLabel} from '@features/settlements/helpers/get-installment-label';
 
 @Component({
   selector: 'app-entry-amount-block',
@@ -28,5 +29,9 @@ export class EntryAmountBlock {
 
   protected readonly installmentCount: Signal<number> = computed(() =>
     this.entry().installments.length
+  );
+
+  protected readonly installmentLabel: Signal<string> = computed(() =>
+    getInstallmentLabel(this.installmentCount())
   );
 }

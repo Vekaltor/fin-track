@@ -2,8 +2,10 @@
   <p class="font-amount text-2xl font-bold tracking-tight" [appAmountColor]="amountTone()">
     {{ entry().totalAmount | appCurrencyPln }}
   </p>
-  <p class="mt-0.5 text-xs text-muted">
-    {{ progressPercent() }}% · {{ installmentCount() }}
-    {{ installmentCount() === 1 ? 'rata' : 'rat' }}
-  </p>
+  @if (installmentCount() > 1) {
+    <p class="mt-0.5 text-xs text-muted">
+      {{ progressPercent() }}% z {{ installmentCount() }}
+      {{ installmentLabel() }}
+    </p>
+  }
 </div>

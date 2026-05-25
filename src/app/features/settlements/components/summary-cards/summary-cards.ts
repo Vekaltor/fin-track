@@ -17,10 +17,12 @@ export class SummaryCards {
 
   protected readonly vm = toSignal(this.facade.vm$);
 
-  public readonly summary: SettlementsSummary | undefined = this.vm()?.summary;
+  protected readonly summary: Signal<SettlementsSummary | undefined> = computed(
+    (): SettlementsSummary | undefined => this.vm()?.summary
+  );
 
   protected readonly balanceTone: Signal<AmountTone> = computed((): AmountTone => {
-    const balance: number = this.summary?.balance ?? 0;
+    const balance: number = this.summary()?.balance ?? 0;
     if (balance > 0) return 'positive';
     if (balance < 0) return 'negative';
     return 'neutral';
