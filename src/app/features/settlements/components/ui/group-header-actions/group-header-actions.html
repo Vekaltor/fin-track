@@ -1,16 +1,16 @@
 <div class="flex shrink-0 flex-wrap items-center gap-3">
   <div class="flex flex-wrap items-center gap-2">
-    <ng-content select="[groupTotals]" />
+    <ng-content select="[groupTotals]"/>
   </div>
   <app-button
     variant="primary_outlined"
     className="text-sm py-1.5! px-3!"
     (clicked)="addEntry.emit()"
   >
-    <ng-icon name="heroPlus" class="text-base" />
+    <ng-icon name="heroPlus" class="text-base"/>
     Dodaj
   </app-button>
-  <app-button variant="ghost" ariaLabel="Usuń grupę" (clicked)="deleteGroup.emit()">
-    <ng-icon name="heroTrash" class="text-lg" />
+  <app-button [appTooltip]="`Usuń grupę ${group().name}`" variant="ghost" ariaLabel="Usuń grupę" (clicked)="deleteGroup.emit()">
+    <ng-icon name="heroTrash" class="text-lg"/>
   </app-button>
 </div>

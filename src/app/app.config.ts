@@ -22,12 +22,12 @@ const isMock: boolean = true;
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
+    provideIcons({...heroOutline}),
+    provideStore(),
     provideRouter(
       appRoutes,
       withPreloading(PreloadAllModules)
     ),
-    provideIcons({...heroOutline}),
-    provideStore(),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: !isDevMode(),
