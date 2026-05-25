@@ -14,7 +14,6 @@ import {cn} from '@utils/cn';
     InputLabel
   ],
   templateUrl: './date-field.html',
-  styles: ``,
 })
 export class DateField implements GenericFormField<string> {
   public readonly field: InputSignal<Field<string>> = input.required<Field<string>>();

@@ -1,27 +1,27 @@
-import {AsyncPipe} from '@angular/common';
-import {Component, inject} from '@angular/core';
-import {AmountColorDirective} from '@shared/directives/amount-color.directive';
-import {CurrencyPlnPipe} from '@shared/pipes/currency-pln.pipe';
+import {Component, computed, inject, Signal} from '@angular/core';
+import {AmountColorDirective} from '@shared/directives/amount-color-directive';
+import {CurrencyPlnPipe} from '@shared/pipes/currency-pln-pipe';
 import {AmountTone} from '@shared/models/types/amount-tone.type';
-import {SettlementsSummary} from '@core/models/settlements-summary.interface';
-import {SummaryCard} from '../summary-card/summary-card';
-import {SettlementsFacade} from '../../store/settlements.facade';
+import {SummaryCard} from '@features/settlements/components/ui/summary-card/summary-card';
+import {SettlementsFacade} from '@features/settlements/store/settlements.facade';
+import {toSignal} from '@angular/core/rxjs-interop';
+import {SettlementsSummary} from '@features/settlements/models/settlements-summary.interface';
 
 @Component({
   selector: 'app-summary-cards',
-  imports: [AsyncPipe, SummaryCard, CurrencyPlnPipe, AmountColorDirective],
+  imports: [SummaryCard, CurrencyPlnPipe, AmountColorDirective],
   templateUrl: './summary-cards.html',
 })
 export class SummaryCards {
-  protected readonly facade: SettlementsFacade = inject(SettlementsFacade);
+  private readonly facade: SettlementsFacade = inject(SettlementsFacade);
+  protected readonly vm = toSignal(this.facade.vm$);
 
-  protected balanceTone(summary: SettlementsSummary): AmountTone {
-    if (summary.balance > 0) {
-      return 'positive';
-    }
-    if (summary.balance < 0) {
-      return 'negative';
-    }
+  public readonly summary: SettlementsSummary | undefined = this.vm()?.summary;
+
+  protected readonly balanceTone: Signal<AmountTone> = computed((): AmountTone => {
+    const balance: number = this.summary?.balance ?? 0;
+    if (balance > 0) return 'positive';
+    if (balance < 0) return 'negative';
     return 'neutral';
-  }
+  });
 }

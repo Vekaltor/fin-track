@@ -1,35 +1,48 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {delay, Observable, of, throwError} from 'rxjs';
+import {finalize} from 'rxjs/operators';
 import {directionToEntryType, INITIAL_SETTLEMENT_GROUPS} from '@core/data/settlements-mock-data';
-import {CreateEntryPayload} from '@core/models/create-entry-payload.interface';
-import {CreateGroupPayload} from '@core/models/create-group-payload.interface';
-import {EntryStatus} from '@core/models/entry-status.enum';
-import {GroupColor} from '@core/models/group-color.enum';
+import {CreateSettlementEntryPayload} from '@core/models/create-settlement-entry-payload.interface';
+import {CreateSettlementGroupPayload} from '@core/models/create-settlement-group-payload.interface';
+import {SettlementStatus} from '@core/models/settlement-status.enum';
 import {InstallmentStatus} from '@core/models/installment-status.enum';
 import {Installment} from '@core/models/installment.interface';
-import {SettlementEntry} from '@core/models/settlement-entry.interface';
+import {Settlement} from '@core/models/settlement.interface';
 import {SettlementGroup} from '@core/models/settlement-group.interface';
+import {
+  markInstallmentsPaidAndReschedule,
+  resolveInstallmentSchedule,
+} from '@features/settlements/helpers/installment-schedule';
 import {SettlementsService} from './settlements-service';
+import {SETTLEMENT_OPERATIONS} from '@core/constants/settlements-operations';
+import {LoadingService} from '@core/services/loading-service';
 
 @Injectable({providedIn: 'root'})
 export class SettlementsMockService extends SettlementsService {
+  private readonly loadingService: LoadingService = inject(LoadingService);
+
   private readonly delayMs: number = 400;
+
   private groups: SettlementGroup[] = structuredClone(INITIAL_SETTLEMENT_GROUPS);
 
-  public override loadGroups(): Observable<readonly SettlementGroup[]> {
-    return of(this.groups).pipe(delay(this.delayMs));
+  public override loadGroups(): Observable<SettlementGroup[]> {
+    return this.withLoading(
+      SETTLEMENT_OPERATIONS.LOAD_GROUPS,
+      of(this.groups).pipe(delay(this.delayMs))
+    );
   }
 
-  public override createGroup(payload: CreateGroupPayload): Observable<SettlementGroup> {
-    const colors: GroupColor[] = [GroupColor.Blue, GroupColor.Green, GroupColor.Orange];
+  public override createGroup(payload: CreateSettlementGroupPayload): Observable<SettlementGroup> {
     const group: SettlementGroup = {
       id: `group-${crypto.randomUUID()}`,
       name: payload.name.trim(),
-      color: colors[this.groups.length % colors.length]!,
       entries: [],
     };
     this.groups = [...this.groups, group];
-    return of(group).pipe(delay(this.delayMs));
+    return this.withLoading(
+      SETTLEMENT_OPERATIONS.CREATE_GROUP,
+      of(group).pipe(delay(this.delayMs))
+    );
   }
 
   public override deleteGroup(groupId: string): Observable<void> {
@@ -38,10 +51,13 @@ export class SettlementsMockService extends SettlementsService {
       return throwError(() => new Error('Grupa nie istnieje'));
     }
     this.groups = this.groups.filter((g) => g.id !== groupId);
-    return of(undefined).pipe(delay(this.delayMs));
+    return this.withLoading(
+      SETTLEMENT_OPERATIONS.DELETE_GROUP,
+      of(undefined).pipe(delay(this.delayMs))
+    );
   }
 
-  public override createEntry(payload: CreateEntryPayload): Observable<SettlementGroup> {
+  public override createEntry(payload: CreateSettlementEntryPayload): Observable<SettlementGroup> {
     const groupIndex: number = this.groups.findIndex((g) => g.id === payload.groupId);
     if (groupIndex === -1) {
       return throwError(() => new Error('Grupa nie istnieje'));
@@ -50,24 +66,26 @@ export class SettlementsMockService extends SettlementsService {
     const entryId: string = `entry-${crypto.randomUUID()}`;
     const installments: Installment[] = payload.splitIntoInstallments
       ? payload.installments.map((inst, index) => ({
-          id: `${entryId}-inst-${index + 1}`,
-          index: index + 1,
-          amount: inst.amount,
-          dueDate: inst.dueDate,
-          note: inst.note,
-          status: InstallmentStatus.Unpaid,
-        }))
+        id: `${entryId}-inst-${index + 1}`,
+        index: index + 1,
+        amount: inst.amount,
+        plannedDueDate: inst.dueDate,
+        dueDate: inst.dueDate,
+        note: inst.note,
+        status: InstallmentStatus.UNPAID,
+      }))
       : [
-          {
-            id: `${entryId}-inst-1`,
-            index: 1,
-            amount: payload.totalAmount,
-            dueDate: payload.dueDate,
-            status: InstallmentStatus.Unpaid,
-          },
-        ];
+        {
+          id: `${entryId}-inst-1`,
+          index: 1,
+          amount: payload.totalAmount,
+          plannedDueDate: payload.dueDate,
+          dueDate: payload.dueDate,
+          status: InstallmentStatus.UNPAID,
+        },
+      ];
 
-    const entry: SettlementEntry = {
+    const entry: Settlement = {
       id: entryId,
       groupId: payload.groupId,
       personName: payload.personName.trim(),
@@ -75,78 +93,87 @@ export class SettlementsMockService extends SettlementsService {
       date: payload.dueDate,
       totalAmount: payload.totalAmount,
       type: directionToEntryType(payload.direction),
-      status: EntryStatus.Open,
+      status: SettlementStatus.OPEN,
       installments,
+      installmentIntervalAmount: payload.installmentIntervalAmount,
+      installmentIntervalUnit: payload.installmentIntervalUnit,
     };
 
     const group: SettlementGroup = this.groups[groupIndex]!;
-    const updated: SettlementGroup = {
-      ...group,
-      entries: [...group.entries, entry],
-    };
+    const updated: SettlementGroup = {...group, entries: [...group.entries, entry]};
     this.groups = this.groups.map((g, i) => (i === groupIndex ? updated : g));
-    return of(updated).pipe(delay(this.delayMs));
+
+    return this.withLoading(
+      SETTLEMENT_OPERATIONS.CREATE_ENTRY,
+      of(updated).pipe(delay(this.delayMs))
+    );
   }
 
   public override deleteEntry(groupId: string, entryId: string): Observable<SettlementGroup> {
-    return this.updateGroupEntries(groupId, (entries) =>
-      entries.filter((e) => e.id !== entryId)
+    return this.withLoading(
+      SETTLEMENT_OPERATIONS.DELETE_ENTRY,
+      this.updateGroupEntries(groupId, (entries) => entries.filter((e) => e.id !== entryId))
     );
   }
 
-  public override payInstallment(
+  public override payInstallments(
     groupId: string,
     entryId: string,
-    installmentId: string
+    installmentIds: readonly string[]
   ): Observable<SettlementGroup> {
-    return this.updateGroupEntries(groupId, (entries) =>
-      entries.map((entry) => {
-        if (entry.id !== entryId) {
-          return entry;
-        }
-        const installments: Installment[] = entry.installments.map((inst) =>
-          inst.id === installmentId
-            ? {
-                ...inst,
-                status: InstallmentStatus.Paid,
-                paidAt: new Date().toISOString().slice(0, 10),
-                paymentMethod: inst.paymentMethod ?? 'Przelew',
-              }
-            : inst
-        );
-        const allPaid: boolean = installments.every(
-          (i) => i.status === InstallmentStatus.Paid
-        );
-        return {
-          ...entry,
-          installments,
-          status: allPaid ? EntryStatus.Settled : entry.status,
-        };
-      })
-    );
-  }
+    const paidAt: string = new Date().toISOString().slice(0, 10);
 
-  public override archiveEntry(groupId: string, entryId: string): Observable<SettlementGroup> {
-    return this.updateGroupEntries(groupId, (entries) =>
-      entries.map((entry) =>
-        entry.id === entryId ? {...entry, status: EntryStatus.Archived} : entry
+    return this.withLoading(
+      SETTLEMENT_OPERATIONS.PAY_INSTALLMENTS,
+      this.updateGroupEntries(groupId, (entries) =>
+        entries.map((entry) => {
+          if (entry.id !== entryId) return entry;
+
+          const schedule = resolveInstallmentSchedule(entry);
+          const installments: Installment[] = markInstallmentsPaidAndReschedule(
+            entry.installments,
+            installmentIds,
+            paidAt,
+            schedule
+          );
+          const allPaid = installments.every((i) => i.status === InstallmentStatus.PAID);
+
+          return {
+            ...entry,
+            installments,
+            status: allPaid ? SettlementStatus.SETTLED : entry.status,
+          };
+        })
       )
     );
   }
 
+  public override archiveEntry(groupId: string, entryId: string): Observable<SettlementGroup> {
+    return this.withLoading(
+      SETTLEMENT_OPERATIONS.ARCHIVE_ENTRY,
+      this.updateGroupEntries(groupId, (entries) =>
+        entries.map((entry) =>
+          entry.id === entryId ? {...entry, status: SettlementStatus.ARCHIVED} : entry
+        )
+      )
+    );
+  }
+
+  private withLoading<T>(operationId: string, source$: Observable<T>): Observable<T> {
+    this.loadingService.start(operationId);
+    return source$.pipe(finalize(() => this.loadingService.stop(operationId)));
+  }
+
   private updateGroupEntries(
     groupId: string,
-    updater: (entries: readonly SettlementEntry[]) => readonly SettlementEntry[]
+    updater: (entries: Settlement[]) => Settlement[]
   ): Observable<SettlementGroup> {
     const groupIndex: number = this.groups.findIndex((g) => g.id === groupId);
     if (groupIndex === -1) {
       return throwError(() => new Error('Grupa nie istnieje'));
     }
     const group: SettlementGroup = this.groups[groupIndex]!;
-    const updated: SettlementGroup = {
-      ...group,
-      entries: updater(group.entries),
-    };
+    const updated: SettlementGroup = {...group, entries: updater(group.entries)};
     this.groups = this.groups.map((g, i) => (i === groupIndex ? updated : g));
     return of(updated).pipe(delay(this.delayMs));
   }

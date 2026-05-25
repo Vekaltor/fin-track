@@ -1,71 +1,59 @@
-import {AsyncPipe} from '@angular/common';
-import {Component, inject, input, InputSignal} from '@angular/core';
-import {CreateEntryPayload} from '@core/models/create-entry-payload.interface';
-import {FilteredSettlementGroup} from '../../store/settlements.selectors';
+import {Component, inject, input, InputSignal, signal, Signal, WritableSignal} from '@angular/core';
+import {CreateSettlementEntryPayload} from '@core/models/create-settlement-entry-payload.interface';
 import {SettlementsFacade} from '../../store/settlements.facade';
 import {EntryForm} from '../entry-form/entry-form';
 import {EntryRow} from '../entry-row/entry-row';
 import {GroupHeader} from '../group-header/group-header';
+import {FilteredSettlementGroup} from '@features/settlements/models/filtered-settlement-group.interface';
+import {SettlementConfirmationAction} from '@features/settlements/models/settlement-confirmation-action.enum';
+import {ModalService} from '@shared/services/modal.service';
+import {ConfirmationDialogViewModel} from '@features/settlements/models/confirmation-dialog-view-model.interface';
 
 @Component({
   selector: 'app-group-panel',
-  imports: [AsyncPipe, GroupHeader, EntryForm, EntryRow],
+  imports: [GroupHeader, EntryForm, EntryRow],
   templateUrl: './group-panel.html',
 })
 export class GroupPanel {
-  public readonly group: InputSignal<FilteredSettlementGroup> =
-    input.required<FilteredSettlementGroup>();
-
   protected readonly facade: SettlementsFacade = inject(SettlementsFacade);
+  private readonly modalService: ModalService = inject(ModalService);
 
-  protected isAddingEntry(groupId: string, addingId: string | null): boolean {
-    return addingId === groupId;
+  protected readonly isSaving: Signal<boolean> = this.facade.isSaving;
+  protected readonly showSettlementForm: WritableSignal<boolean> = signal(false);
+  protected readonly expandedEntryIds: WritableSignal<Set<string>> = signal(new Set());
+
+  public readonly group: InputSignal<FilteredSettlementGroup> = input.required();
+
+  protected onShowEntryForm(): void {
+    this.showSettlementForm.set(true);
   }
 
-  protected isExpanded(entryId: string, expandedIds: readonly string[]): boolean {
-    return expandedIds.includes(entryId);
+  protected onHideEntryForm(): void {
+    this.showSettlementForm.set(false);
   }
 
-  protected onAddEntry(): void {
-    this.facade.showAddEntryForm(this.group().id);
-  }
-
-  protected onDeleteGroup(): void {
-    this.facade.openDeleteGroupConfirmation(this.group().id, this.group().name);
-  }
-
-  protected onEntrySaved(payload: CreateEntryPayload): void {
-    this.facade.createEntry(payload);
-  }
-
-  protected onEntryFormCancel(): void {
-    this.facade.hideAddEntryForm();
+  protected isExpanded(entryId: string): boolean {
+    return this.expandedEntryIds().has(entryId);
   }
 
   protected onToggleExpanded(entryId: string): void {
-    this.facade.toggleEntryExpanded(entryId);
+    this.expandedEntryIds.update((ids) => {
+      const next = new Set(ids);
+      next.has(entryId) ? next.delete(entryId) : next.add(entryId);
+      return next;
+    });
   }
 
-  protected onDeleteEntry(entryId: string): void {
-    const entry = this.group().entries.find((e) => e.id === entryId);
-    if (!entry) {
-      return;
-    }
-    this.facade.openDeleteEntryConfirmation(this.group().id, entryId, entry.personName);
+  protected onDeleteGroup(): void {
+    this.modalService.open<ConfirmationDialogViewModel>({
+      action: SettlementConfirmationAction.DELETE_GROUP,
+      groupId: this.group().id,
+      personName: this.group().name,
+    });
   }
 
-  protected onArchiveEntry(entryId: string): void {
-    const entry = this.group().entries.find((e) => e.id === entryId);
-    if (!entry) {
-      return;
-    }
-    this.facade.openArchiveEntryConfirmation(this.group().id, entryId, entry.personName);
-  }
-
-  protected onPayInstallment(event: {
-    entryId: string;
-    installmentId: string;
-  }): void {
-    this.facade.payInstallment(this.group().id, event.entryId, event.installmentId);
+  protected onEntrySaved(payload: CreateSettlementEntryPayload): void {
+    this.facade.createSettlement(payload);
+    this.showSettlementForm.set(false);
   }
 }

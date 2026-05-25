@@ -2,7 +2,8 @@ import {inject, Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {catchError, map, mergeMap, of, switchMap} from 'rxjs';
 import {SettlementsService} from '@core/services/settlements-service';
-import {SettlementsActions} from './settlements.actions';
+import {SettlementsPageActions} from './settlements-page.actions';
+import {SettlementsApiActions} from './settlements-api.actions';
 
 @Injectable()
 export class SettlementsEffects {
@@ -11,12 +12,12 @@ export class SettlementsEffects {
 
   public readonly loadGroups$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SettlementsActions.loadGroups),
+      ofType(SettlementsPageActions.loadGroups),
       switchMap(() =>
         this.settlementsService.loadGroups().pipe(
-          map((groups) => SettlementsActions.loadGroupsSuccess({groups})),
+          map((groups) => SettlementsApiActions.loadGroupsSuccess({groups})),
           catchError((err: Error) =>
-            of(SettlementsActions.loadGroupsFailure({error: err.message}))
+            of(SettlementsApiActions.loadGroupsFailure({error: err.message}))
           )
         )
       )
@@ -25,12 +26,12 @@ export class SettlementsEffects {
 
   public readonly createGroup$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SettlementsActions.createGroup),
+      ofType(SettlementsPageActions.createGroup),
       mergeMap(({payload}) =>
         this.settlementsService.createGroup(payload).pipe(
-          map((group) => SettlementsActions.createGroupSuccess({group})),
+          map((group) => SettlementsApiActions.createGroupSuccess({group})),
           catchError((err: Error) =>
-            of(SettlementsActions.createGroupFailure({error: err.message}))
+            of(SettlementsApiActions.createGroupFailure({error: err.message}))
           )
         )
       )
@@ -39,12 +40,12 @@ export class SettlementsEffects {
 
   public readonly deleteGroup$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SettlementsActions.deleteGroup),
+      ofType(SettlementsPageActions.deleteGroup),
       mergeMap(({groupId}) =>
         this.settlementsService.deleteGroup(groupId).pipe(
-          map(() => SettlementsActions.deleteGroupSuccess({groupId})),
+          map(() => SettlementsApiActions.deleteGroupSuccess({groupId})),
           catchError((err: Error) =>
-            of(SettlementsActions.deleteGroupFailure({error: err.message}))
+            of(SettlementsApiActions.deleteGroupFailure({error: err.message}))
           )
         )
       )
@@ -53,12 +54,12 @@ export class SettlementsEffects {
 
   public readonly createEntry$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SettlementsActions.createEntry),
+      ofType(SettlementsPageActions.createEntry),
       mergeMap(({payload}) =>
         this.settlementsService.createEntry(payload).pipe(
-          map((group) => SettlementsActions.createEntrySuccess({group})),
+          map((group) => SettlementsApiActions.createEntrySuccess({group})),
           catchError((err: Error) =>
-            of(SettlementsActions.createEntryFailure({error: err.message}))
+            of(SettlementsApiActions.createEntryFailure({error: err.message}))
           )
         )
       )
@@ -67,26 +68,26 @@ export class SettlementsEffects {
 
   public readonly deleteEntry$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SettlementsActions.deleteEntry),
+      ofType(SettlementsPageActions.deleteEntry),
       mergeMap(({groupId, entryId}) =>
         this.settlementsService.deleteEntry(groupId, entryId).pipe(
-          map((group) => SettlementsActions.deleteEntrySuccess({group})),
+          map((group) => SettlementsApiActions.deleteEntrySuccess({group})),
           catchError((err: Error) =>
-            of(SettlementsActions.deleteEntryFailure({error: err.message}))
+            of(SettlementsApiActions.deleteEntryFailure({error: err.message}))
           )
         )
       )
     )
   );
 
-  public readonly payInstallment$ = createEffect(() =>
+  public readonly payInstallments$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SettlementsActions.payInstallment),
-      mergeMap(({groupId, entryId, installmentId}) =>
-        this.settlementsService.payInstallment(groupId, entryId, installmentId).pipe(
-          map((group) => SettlementsActions.payInstallmentSuccess({group})),
+      ofType(SettlementsPageActions.payInstallments),
+      mergeMap(({groupId, entryId, installmentIds}) =>
+        this.settlementsService.payInstallments(groupId, entryId, installmentIds).pipe(
+          map((group) => SettlementsApiActions.payInstallmentsSuccess({group})),
           catchError((err: Error) =>
-            of(SettlementsActions.payInstallmentFailure({error: err.message}))
+            of(SettlementsApiActions.payInstallmentsFailure({error: err.message}))
           )
         )
       )
@@ -95,12 +96,12 @@ export class SettlementsEffects {
 
   public readonly archiveEntry$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(SettlementsActions.archiveEntry),
+      ofType(SettlementsPageActions.archiveEntry),
       mergeMap(({groupId, entryId}) =>
         this.settlementsService.archiveEntry(groupId, entryId).pipe(
-          map((group) => SettlementsActions.archiveEntrySuccess({group})),
+          map((group) => SettlementsApiActions.archiveEntrySuccess({group})),
           catchError((err: Error) =>
-            of(SettlementsActions.archiveEntryFailure({error: err.message}))
+            of(SettlementsApiActions.archiveEntryFailure({error: err.message}))
           )
         )
       )

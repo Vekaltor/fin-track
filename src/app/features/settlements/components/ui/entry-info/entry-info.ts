@@ -1,15 +1,13 @@
 import {Component, computed, input, InputSignal, Signal} from '@angular/core';
 import {AppBadge} from '@shared/components/ui/app-badge/app-badge';
-import {ShortDatePlPipe} from '@shared/pipes/short-date.pipe';
-import {
-  ENTRY_STATUS_BADGE_VARIANT,
-  ENTRY_STATUS_LABELS,
-  ENTRY_TYPE_LABELS,
-} from '../../../constants/entry-labels.constant';
-import {EntryType} from '@core/models/entry-type.enum';
-import {SettlementEntry} from '@core/models/settlement-entry.interface';
-import {getEntryProgressPercent} from '../../../utils/settlement-calculations.util';
+import {ShortDatePlPipe} from '@shared/pipes/short-date-pipe';
+import {SETTLEMENT_STATUS_BADGE_VARIANT,} from '../../../constants/settlement-status-badge-variant';
+import {SettlementType} from '@core/models/settlement-type.enum';
+import {Settlement} from '@core/models/settlement.interface';
+import {getEntryProgressPercent} from '@features/settlements/helpers/settlement-calculations';
 import {EntryProgressBar} from '../entry-progress-bar/entry-progress-bar';
+import {SETTLEMENT_TYPE_LABELS} from '@features/settlements/constants/settlement-type-labels';
+import {SETTLEMENT_STATUS_LABELS} from '@features/settlements/constants/settlement-status-labels';
 
 @Component({
   selector: 'app-entry-info',
@@ -17,12 +15,12 @@ import {EntryProgressBar} from '../entry-progress-bar/entry-progress-bar';
   templateUrl: './entry-info.html',
 })
 export class EntryInfo {
-  public readonly entry: InputSignal<SettlementEntry> = input.required<SettlementEntry>();
+  public readonly entry: InputSignal<Settlement> = input.required<Settlement>();
 
-  protected readonly EntryType = EntryType;
-  protected readonly typeLabels = ENTRY_TYPE_LABELS;
-  protected readonly statusLabels = ENTRY_STATUS_LABELS;
-  protected readonly statusBadgeVariant = ENTRY_STATUS_BADGE_VARIANT;
+  protected readonly EntryType = SettlementType;
+  protected readonly typeLabels = SETTLEMENT_TYPE_LABELS;
+  protected readonly statusLabels = SETTLEMENT_STATUS_LABELS;
+  protected readonly statusBadgeVariant = SETTLEMENT_STATUS_BADGE_VARIANT;
 
   protected readonly progressPercent: Signal<number> = computed(() =>
     getEntryProgressPercent(this.entry())

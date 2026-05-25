@@ -1,0 +1,19 @@
+<div class="mx-auto flex w-full max-w-6xl flex-col gap-6">
+  <app-settlements-header (newGroupClicked)="showNewGroupForm.set(true)" />
+
+  <app-summary-cards />
+
+  <app-filter-toolbar />
+
+  @if (showNewGroupForm()) {
+    <app-new-group-form (closed)="showNewGroupForm.set(false)" />
+  }
+
+  @if (vm()?.error; as error) {
+    <p class="rounded-lg bg-debt/10 px-4 py-2 text-sm text-debt">{{ error }}</p>
+  }
+
+  <app-group-list />
+
+  <app-settlements-confirm-dialog />
+</div>

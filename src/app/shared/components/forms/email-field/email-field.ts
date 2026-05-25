@@ -13,7 +13,6 @@ import {InputError} from '@shared/components/forms/input-error/input-error';
     InputError
   ],
   templateUrl: './email-field.html',
-  styleUrl: './email-field.css',
 })
 export class EmailField {
   public field: InputSignal<Field<string>> = input.required<Field<string>>();

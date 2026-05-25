@@ -1,9 +1,9 @@
 <div
   class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
-  [class.bg-debt/10]="type() === EntryType.Debt"
-  [class.bg-receivable/10]="type() === EntryType.Receivable"
+  [class.bg-debt/10]="type() === SettlementType.DEBT"
+  [class.bg-receivable/10]="type() === SettlementType.RECEIVABLE"
 >
-  @if (type() === EntryType.Debt) {
+  @if (type() === SettlementType.DEBT) {
     <ng-icon name="heroClock" class="text-lg text-debt" />
   } @else {
     <ng-icon name="heroArrowTrendingUp" class="text-lg text-receivable" />

@@ -1,0 +1,12 @@
+<div
+  [class]="
+    'rounded-2xl border border-white/60 p-6 shadow-sm ' + backgroundClass()
+  "
+>
+  <p class="text-[11px] font-semibold tracking-[0.12em] text-muted uppercase">
+    {{ label() }}
+  </p>
+  <p class="font-amount mt-3 text-[2.5rem] leading-none font-bold tracking-tight" [appAmountColor]="tone()">
+    {{ (amount() ?? 0) | appCurrencyPln }}
+  </p>
+</div>

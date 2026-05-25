@@ -1,13 +1,12 @@
 import {ChangeDetectionStrategy, Component, effect, inject, Signal} from '@angular/core';
-import {NgClass} from '@angular/common';
 import {ToastService} from '../../services/toast-service';
 import {Toast as IToast} from "../../models/toast.interface"
+import {ToastType} from '@core/models/toast-type.enum';
 
 @Component({
   selector: 'app-toast',
-  imports: [NgClass],
+  imports: [],
   templateUrl: './toast.html',
-  styleUrl: './toast.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Toast {
@@ -30,6 +29,13 @@ export class Toast {
         }, toast.duration);
       });
     });
+  }
+
+  protected getToastClass(type: ToastType): Record<string, boolean> {
+    return {
+      'bg-[#10b981] border-[#047857]': type === ToastType.SUCCESS,
+      'bg-[#ef4444] border-[#b91c1c]': type === ToastType.ERROR,
+    };
   }
 
   protected remove(id: string): void {

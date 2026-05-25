@@ -1,7 +1,7 @@
 import {Component, input, InputSignal} from '@angular/core';
 import {NgIcon, provideIcons} from '@ng-icons/core';
 import {heroArrowTrendingUp, heroClock} from '@ng-icons/heroicons/outline';
-import {EntryType} from '@core/models/entry-type.enum';
+import {SettlementType} from '@core/models/settlement-type.enum';
 
 @Component({
   selector: 'app-entry-type-icon',
@@ -10,7 +10,7 @@ import {EntryType} from '@core/models/entry-type.enum';
   templateUrl: './entry-type-icon.html',
 })
 export class EntryTypeIcon {
-  public readonly type: InputSignal<EntryType> = input.required<EntryType>();
+  public readonly type: InputSignal<SettlementType> = input.required<SettlementType>();
 
-  protected readonly EntryType = EntryType;
+  protected readonly SettlementType = SettlementType;
 }

@@ -1,11 +1,11 @@
 import {Component, computed, input, InputSignal, Signal} from '@angular/core';
-import {AmountColorDirective} from '@shared/directives/amount-color.directive';
-import {CurrencyPlnPipe} from '@shared/pipes/currency-pln.pipe';
+import {AmountColorDirective} from '@shared/directives/amount-color-directive';
+import {CurrencyPlnPipe} from '@shared/pipes/currency-pln-pipe';
 import {AmountTone} from '@shared/models/types/amount-tone.type';
-import {EntryStatus} from '@core/models/entry-status.enum';
-import {EntryType} from '@core/models/entry-type.enum';
-import {SettlementEntry} from '@core/models/settlement-entry.interface';
-import {getEntryProgressPercent} from '../../../utils/settlement-calculations.util';
+import {SettlementStatus} from '@core/models/settlement-status.enum';
+import {SettlementType} from '@core/models/settlement-type.enum';
+import {Settlement} from '@core/models/settlement.interface';
+import {getEntryProgressPercent} from '@features/settlements/helpers/settlement-calculations';
 
 @Component({
   selector: 'app-entry-amount-block',
@@ -13,13 +13,13 @@ import {getEntryProgressPercent} from '../../../utils/settlement-calculations.ut
   templateUrl: './entry-amount-block.html',
 })
 export class EntryAmountBlock {
-  public readonly entry: InputSignal<SettlementEntry> = input.required<SettlementEntry>();
+  public readonly entry: InputSignal<Settlement> = input.required<Settlement>();
 
   protected readonly amountTone: Signal<AmountTone> = computed(() => {
-    if (this.entry().status === EntryStatus.Archived) {
+    if (this.entry().status === SettlementStatus.ARCHIVED) {
       return 'muted';
     }
-    return this.entry().type === EntryType.Receivable ? 'positive' : 'negative';
+    return this.entry().type === SettlementType.RECEIVABLE ? 'positive' : 'negative';
   });
 
   protected readonly progressPercent: Signal<number> = computed(() =>

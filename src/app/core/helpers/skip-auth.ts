@@ -6,6 +6,6 @@ import {HttpContext} from '@angular/common/http';
  * Use this when making public API calls that do not require an Authorization header.
  * * @returns An HttpContext instance with SKIP_AUTH_TOKEN enabled.
  */
-export function skipAuth() {
+export function skipAuth(): HttpContext {
   return new HttpContext().set(SKIP_AUTH_TOKEN, true);
 }

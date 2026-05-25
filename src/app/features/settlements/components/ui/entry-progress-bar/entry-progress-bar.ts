@@ -1,5 +1,5 @@
 import {Component, input, InputSignal} from '@angular/core';
-import {EntryType} from '@core/models/entry-type.enum';
+import {SettlementType} from '@core/models/settlement-type.enum';
 
 @Component({
   selector: 'app-entry-progress-bar',
@@ -7,7 +7,7 @@ import {EntryType} from '@core/models/entry-type.enum';
 })
 export class EntryProgressBar {
   public readonly percent: InputSignal<number> = input.required<number>();
-  public readonly type: InputSignal<EntryType> = input.required<EntryType>();
+  public readonly type: InputSignal<SettlementType> = input.required<SettlementType>();
 
-  protected readonly EntryType = EntryType;
+  protected readonly EntryType = SettlementType;
 }

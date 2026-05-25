@@ -1,0 +1,23 @@
+<div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-debt/10 text-debt">
+  <ng-icon name="heroTrash" class="text-2xl" />
+</div>
+<h2 class="text-lg font-semibold text-dark">Usuń wpis?</h2>
+<p class="mt-2 text-sm leading-relaxed text-muted">
+  @if (personName()) {
+    Wpis „{{ personName() }}” zostanie trwale usunięty.
+  } @else {
+    Ten wpis zostanie trwale usunięty.
+  }
+</p>
+<div class="mt-6 flex justify-end gap-3">
+  <app-button variant="secondary" [disabled]="loading()" (clicked)="onCancel()">
+    Anuluj
+  </app-button>
+  <app-button
+    variant="danger_outlined"
+    [loading]="loading()"
+    (clicked)="confirmed.emit()"
+  >
+    Usuń
+  </app-button>
+</div>

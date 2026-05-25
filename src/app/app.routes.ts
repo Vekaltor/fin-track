@@ -12,16 +12,16 @@ export const appRoutes: Routes = [
     children: [
       {
         path:"",
-        loadComponent: () => import("./pages/dashboard-view/dashboard-view").then(c => c.DashboardView),
+        loadComponent: () => import("./pages/dashboard-page/dashboard-page").then(c => c.DashboardPage),
       },
       {
         path: "accounts",
-        loadComponent: () => import("./pages/accounts-view/accounts-view").then(c => c.AccountsView),
+        loadComponent: () => import("./pages/accounts-page/accounts-page").then(c => c.AccountsPage),
       },
       {
         path: "settlements",
         providers: [provideSettlementsStore()],
-        loadComponent: () => import("./pages/settlements-view/settlements-view").then(c => c.SettlementsView),
+        loadComponent: () => import("./pages/settlements-page/settlements-page").then(c => c.SettlementsPage),
       },
     ]
   },

@@ -8,30 +8,37 @@ export interface ModalOpenOptions {
 // TODO napisac testy ktore sprawdza czy mozna odpalic kilka modali i co sie stnaie jak zamkne
 @Injectable({providedIn: 'root'})
 export class ModalService {
-  private readonly visible: WritableSignal<boolean> = signal(false);
-  private readonly backdropClosable: WritableSignal<boolean> = signal(true);
-
-  public readonly isOpen: Signal<boolean> = this.visible.asReadonly();
-  public readonly canCloseOnBackdrop: Signal<boolean> = this.backdropClosable.asReadonly();
-
+  private readonly _visible: WritableSignal<boolean> = signal(false);
+  private readonly _data: WritableSignal<unknown> = signal<unknown>(null);
+  private readonly _backdropClosable: WritableSignal<boolean> = signal(true);
   private onCloseHandler: (() => void) | null = null;
 
-  public open(options?: ModalOpenOptions): void {
-    this.backdropClosable.set(options?.closeOnBackdrop ?? true);
+  public readonly isOpen: Signal<boolean> = this._visible.asReadonly();
+  public readonly canCloseOnBackdrop: Signal<boolean> = this._backdropClosable.asReadonly();
+
+  public open<T>(data?: T, options?: ModalOpenOptions): void {
+    this._data.set(data ?? null);
+    this._backdropClosable.set(options?.closeOnBackdrop ?? true);
     this.onCloseHandler = options?.onClose ?? null;
-    this.visible.set(true);
+    this._visible.set(true);
+  }
+
+  public getData<T>(): T | null {
+    return this._data() as T | null;
   }
 
   public close(): void {
-    if (!this.visible()) return;
-    this.visible.set(false);
-    const handler: (() => void) | null = this.onCloseHandler;
+    if (!this._visible()) return;
+    this._visible.set(false);
+    this._data.set(null);
+    const handler = this.onCloseHandler;
     this.onCloseHandler = null;
     handler?.();
   }
 
   public closeSilently(): void {
-    this.visible.set(false);
+    this._visible.set(false);
+    this._data.set(null);
     this.onCloseHandler = null;
   }
 }

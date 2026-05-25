@@ -1,13 +1,26 @@
-@if (facade.confirmationDialog$ | async; as dialog) {
-  <app-confirm-dialog
-    [open]="dialog.open"
-    [title]="dialog.title"
-    [message]="dialog.message"
-    [confirmLabel]="dialog.confirmLabel"
-    [tone]="dialog.tone"
-    [iconName]="dialog.iconName"
-    [loading]="(facade.saving$ | async) ?? false"
-    (cancelled)="onCancel()"
-    (confirmed)="onConfirm(dialog)"
-  />
-}
+<app-modal>
+  @if (config(); as config) {
+    @switch (config.action) {
+      @case (SettlementConfirmationAction.DELETE_GROUP) {
+        <app-confirmation-delete-group
+          [loading]="isSaving()"
+          (confirmed)="onConfirm()"
+        />
+      }
+      @case (SettlementConfirmationAction.DELETE_ENTRY) {
+        <app-confirmation-delete-entry
+          [personName]="config.personName ?? ''"
+          [loading]="isSaving()"
+          (confirmed)="onConfirm()"
+        />
+      }
+      @case (SettlementConfirmationAction.ARCHIVE_ENTRY) {
+        <app-confirmation-archive-entry
+          [personName]="config.personName ?? ''"
+          [loading]="isSaving()"
+          (confirmed)="onConfirm()"
+        />
+      }
+    }
+  }
+</app-modal>

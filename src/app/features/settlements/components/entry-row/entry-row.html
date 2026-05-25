@@ -7,8 +7,8 @@
     <app-entry-amount-block [entry]="entry()" />
     <app-entry-row-actions
       [expanded]="expanded()"
-      (archive)="archiveEntry.emit()"
-      (deleteEntry)="deleteEntry.emit()"
+      (archive)="archiveEntry()"
+      (deleteEntry)="deleteEntry()"
       (toggleExpanded)="toggleExpanded.emit()"
     />
   </div>
@@ -16,9 +16,8 @@
   @if (expanded()) {
     <app-installment-panel
       [entry]="entry()"
-      [groupId]="groupId()"
       [saving]="saving()"
-      (payInstallment)="payInstallment.emit($event)"
+      (payInstallments)="payInstallments($event)"
     />
   }
 </div>

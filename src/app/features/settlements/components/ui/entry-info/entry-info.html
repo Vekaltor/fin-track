@@ -1,7 +1,7 @@
 <div class="min-w-0 grow">
   <div class="flex flex-wrap items-center gap-2">
     <span class="text-base font-semibold text-dark">{{ entry().personName }}</span>
-    <app-badge [variant]="entry().type === EntryType.Debt ? 'danger' : 'success'">
+    <app-badge [variant]="entry().type === EntryType.DEBT ? 'danger' : 'success'">
       {{ typeLabels[entry().type] }}
     </app-badge>
     <app-badge [variant]="statusBadgeVariant[entry().status]">
@@ -9,7 +9,7 @@
     </app-badge>
   </div>
   <p class="mt-0.5 text-sm text-muted">
-    {{ entry().description }} · {{ entry().date | shortDatePl }}
+    {{ entry().description }} · {{ entry().date | appShortDatePl }}
   </p>
   @if (entry().installments.length > 1) {
     <app-entry-progress-bar [percent]="progressPercent()" [type]="entry().type" />
