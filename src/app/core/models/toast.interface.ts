@@ -5,4 +5,5 @@ export interface Toast {
   message: string,
   duration: number,
   type: ToastType
+  timeoutId: number,
 }

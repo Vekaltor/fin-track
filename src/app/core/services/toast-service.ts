@@ -17,46 +17,65 @@ export class ToastService {
       case ToastType.SUCCESS:
         this.onSuccess(message, duration);
         break;
+      case ToastType.WARNING:
+        this.onWarning(message, duration);
+        break;
+      case ToastType.INFO:
+        this.onInfo(message, duration);
+        break;
     }
   }
 
-  public cancelMessage(id: string): void {
-    this._toasts.update((prev: Toast[]) => prev.filter((toast: Toast): boolean => toast.id != id))
+  public cancelMessage(toastId: string, timeoutId?: number): void {
+    timeoutId && clearTimeout(timeoutId);
+    this._toasts.update((prev: Toast[]): Toast[] => prev.filter((toast: Toast): boolean => toast.id != toastId))
   }
 
   private onSuccess(message: string, duration: number = this.DEFAULT_DURATION_TIME): void {
-    this._toasts.update((prev: Toast[]) => [...prev, {
-      id: crypto.randomUUID(),
+    const id: string = crypto.randomUUID();
+    this._toasts.update((prev: Toast[]): Toast[] => [...prev, {
+      id,
       duration,
       message,
-      type: ToastType.SUCCESS
+      type: ToastType.SUCCESS,
+      timeoutId: this.startAutoRemoveTimer(id, duration),
     }]);
   }
 
   private onError(message: string, duration: number = this.DEFAULT_DURATION_TIME): void {
-    this._toasts.update((prev: Toast[]) => [...prev, {
-      id: crypto.randomUUID(),
+    const id: string = crypto.randomUUID();
+    this._toasts.update((prev: Toast[]): Toast[] => [...prev, {
+      id,
       duration,
       message,
-      type: ToastType.ERROR
+      type: ToastType.ERROR,
+      timeoutId: this.startAutoRemoveTimer(id, duration),
     }]);
   }
 
   private onInfo(message: string, duration: number = this.DEFAULT_DURATION_TIME): void {
-    this._toasts.update((prev: Toast[]) => [...prev, {
-      id: crypto.randomUUID(),
+    const id: string = crypto.randomUUID();
+    this._toasts.update((prev: Toast[]): Toast[] => [...prev, {
+      id,
       duration,
       message,
-      type: ToastType.INFO
+      type: ToastType.INFO,
+      timeoutId: this.startAutoRemoveTimer(id, duration),
     }]);
   }
 
   private onWarning(message: string, duration: number = this.DEFAULT_DURATION_TIME): void {
-    this._toasts.update((prev: Toast[]) => [...prev, {
-      id: crypto.randomUUID(),
+    const id: string = crypto.randomUUID();
+    this._toasts.update((prev: Toast[]): Toast[] => [...prev, {
+      id,
       duration,
       message,
-      type: ToastType.WARNING
+      type: ToastType.WARNING,
+      timeoutId: this.startAutoRemoveTimer(id, duration),
     }]);
+  }
+
+  private startAutoRemoveTimer(toastId: string, duration: number): number {
+    return setTimeout((): void => this.cancelMessage(toastId), duration);
   }
 }

@@ -1,16 +1,21 @@
 <div class="fixed top-6 right-6 z-9999 flex flex-col gap-3">
-  @for (item of toasts(); track item.id) {
+  @for (toast of toasts(); track toast.id) {
     <div
-      class="pointer-events-auto min-w-75 max-w-112.5 px-5 py-4 rounded-lg shadow-lg flex justify-between items-center text-white text-sm font-medium border-l-4 animate-[slideIn_0.3s_ease-out]"
-      [class]="getToastClass(item.type)"
+      data-testid="toast-item"
+      [class]="cn(
+        'pointer-events-auto min-w-75 max-w-112.5 px-5 py-4 rounded-lg shadow-lg flex justify-between items-center',
+        'text-white text-sm font-medium border-l-4 animate-[slideIn_0.3s_ease-out]',
+        getToastClass(toast.type)
+      )"
     >
-      <span class="flex-1 mr-3 leading-snug">
-        {{ item.message }}
+      <span data-testid="toast-message" class="flex-1 mr-3 leading-snug">
+        {{ toast.message }}
       </span>
 
       <button
+        data-testid="toast-cancel"
         class="text-xl cursor-pointer opacity-70 px-1 hover:opacity-100 transition-opacity"
-        (click)="remove(item.id)"
+        (click)="remove(toast.id, toast.timeoutId)"
       >
         ×
       </button>

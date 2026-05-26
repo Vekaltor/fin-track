@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-dashboard-page',
   imports: [],
   templateUrl: './dashboard-page.html',
 })
-export class DashboardPage {}
+export class DashboardPage {
+}
