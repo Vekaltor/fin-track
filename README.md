@@ -25,6 +25,7 @@ The app itself lets you track bank accounts, browse transaction history, filter 
 - RxJS v 7.8.0
 - NgRx v 21.0.0
 - TailwindCSS v.4.3.0
+- vitest + jsdom
 
 ---
 
